@@ -45,25 +45,26 @@ The line would originate in the center at (0, 0). We can see that iirrevelently 
 for each class.
 
 Question 2.4
-[Epoch 01] Loss: 0.4951
-[Epoch 01] Acc.: 98.4127%
-[Epoch 02] Loss: 0.1104
-[Epoch 02] Acc.: 99.8016%
-[Epoch 03] Loss: 0.0207
-[Epoch 03] Acc.: 99.6032%
-[Epoch 04] Loss: 0.0109
-[Epoch 04] Acc.: 99.6032%
-[Epoch 05] Loss: 0.0060
-[Epoch 05] Acc.: 99.8016%
-[Epoch 06] Loss: 0.0054
-[Epoch 06] Acc.: 99.6032%
-[Epoch 07] Loss: 0.0043
+
+[Epoch 01] Loss: 0.6052
+[Epoch 01] Acc.: 77.7778%
+[Epoch 02] Loss: 0.3481
+[Epoch 02] Acc.: 99.0079%
+[Epoch 03] Loss: 0.1183
+[Epoch 03] Acc.: 100.0000%
+[Epoch 04] Loss: 0.0474
+[Epoch 04] Acc.: 100.0000%
+[Epoch 05] Loss: 0.0270
+[Epoch 05] Acc.: 100.0000%
+[Epoch 06] Loss: 0.0180
+[Epoch 06] Acc.: 99.8016%
+[Epoch 07] Loss: 0.0128
 [Epoch 07] Acc.: 99.8016%
-[Epoch 08] Loss: 0.0026
-[Epoch 08] Acc.: 99.8016%
-[Epoch 09] Loss: 0.0028
-[Epoch 09] Acc.: 99.8016%
-[Epoch 10] Loss: 0.0038
+[Epoch 08] Loss: 0.0095
+[Epoch 08] Acc.: 100.0000%
+[Epoch 09] Loss: 0.0079
+[Epoch 09] Acc.: 100.0000%
+[Epoch 10] Loss: 0.0065
 [Epoch 10] Acc.: 99.8016%
 
 Answer: the accuracy is way better because we are using multiple classifier. Instinctively, they
@@ -71,7 +72,7 @@ can be organised circularly around the data. This would help mimic the circle sh
 and so it increased greatly the accuracy of the prediction.
 
 
-Queston 2.4
+Queston 2.5
 
 With x² + y^2 = z
 [Epoch 01] Loss: 0.9054
@@ -154,8 +155,8 @@ def run_validation_epoch(net, dataloader):
 
 if __name__ == '__main__':
     # Create the training dataset and dataloader.
-    #train_dataset = Simple2DDataset(split='train')
-    train_dataset = Simple2DTransformDataset(split='train')
+    train_dataset = Simple2DDataset(split='train')
+    #train_dataset = Simple2DTransformDataset(split='train')
     train_dataloader = DataLoader(
         train_dataset,
         batch_size=BATCH_SIZE,
@@ -164,8 +165,8 @@ if __name__ == '__main__':
     )
     
     # Create the validation dataset and dataloader.
-    #valid_dataset = Simple2DDataset(split='valid')
-    valid_dataset = Simple2DTransformDataset(split='valid')
+    valid_dataset = Simple2DDataset(split='valid')
+    #valid_dataset = Simple2DTransformDataset(split='valid')
     valid_dataloader = DataLoader(
         valid_dataset,
         batch_size=BATCH_SIZE,
@@ -173,8 +174,8 @@ if __name__ == '__main__':
     )
 
     # Create the network.
-    net = LinearClassifier(3)
-    #net = MLPClassifier()
+    #net = LinearClassifier(3)
+    net = MLPClassifier()
 
     # Create the optimizer.
     optimizer = Adam(net.parameters())

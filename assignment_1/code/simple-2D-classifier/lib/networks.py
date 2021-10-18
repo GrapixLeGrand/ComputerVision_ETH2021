@@ -43,9 +43,7 @@ class MLPClassifier(nn.Module):
             nn.ReLU(),
             nn.Linear(16, 16),      #1st hidden layer
             nn.ReLU(),
-            nn.Linear(16, 16),      #2nd hidden layer
-            nn.ReLU(),
-            nn.Linear(16, 1)    #output layer
+            nn.Linear(16, 1)        #output layer
         )
     
     def forward(self, batch):
