@@ -37,10 +37,29 @@ class SegNetLite(nn.Module):
         # following output dimension (igoring batch dimension):
         # 3 x 64 x 64 (input) -> 32 x 32 x 32 -> 64 x 16 x 16 -> 128 x 8 x 8 -> 256 x 4 x 4
         # each block should consist of: Conv2d->BatchNorm2d->ReLU->MaxPool2d
-        layers_conv_down = []
-        layers_bn_down = []
-        layers_pooling = []
-        raise NotImplementedError('Downsampling layers are not implemented!')
+        
+        c = [input_size] + down_filter_sizes #[3, 32, 64, 128, 256] # input channels number to the bottleneck part
+        
+        layers_conv_down = [
+            nn.Conv2d(c[i], c[i + 1], (kernel_sizes[i], kernel_sizes[i]), padding=conv_paddings[i]) for i in range(4)
+        ]
+
+        """
+        as computed in the last assignment, the number of parameters for a layer
+        is determined as C_in * (K^2 * C_in + 1). The batch norm is applied over
+        all the learnable parameters.
+        """
+        layers_bn_down = [
+            (nn.BatchNorm2d(c[i] * (kernel_sizes[i]**2 * c[i + 1] + 1)), nn.ReLU()) for i in range(4)
+        ]
+        #flatten the tuples
+        layers_bn_down = [item for bAndReLU in layers_bn_down for item in bAndReLU]
+
+        layers_pooling = [
+            nn.MaxPool2d(pooling_kernel_sizes[i], stride=pooling_strides[i]) for i in range(4)
+        ]
+
+        #raise NotImplementedError('Downsampling layers are not implemented!')
 
         # Convert Python list to nn.ModuleList, so that PyTorch's autograd
         # package can track gradients and update parameters of these layers
@@ -53,10 +72,24 @@ class SegNetLite(nn.Module):
         # following output dimension (igoring batch dimension):
         # 256 x 4 x 4 (input) -> 128 x 8 x 8 -> 64 x 16 x 16 -> 32 x 32 x 32 -> 32 x 64 x 64
         # each block should consist of: MaxUnpool2d->Conv2d->BatchNorm2d->ReLU
-        layers_conv_up = []
-        layers_bn_up = []
-        layers_unpooling = []
-        raise NotImplementedError('Upsampling layers are not implemented!')
+
+        up_c = [down_filter_sizes[3]] + up_filter_sizes
+
+        layers_conv_up = [
+            nn.Conv2d(up_c[i], up_c[i + 1], (kernel_sizes[i], kernel_sizes[i]), padding=conv_paddings[i]) for i in range(4)
+        ]
+
+        layers_bn_up = [
+            (nn.BatchNorm2d(up_c[i] * (kernel_sizes[i]**2 * up_c[i + 1] + 1)), nn.ReLU()) for i in range(4)
+        ]
+        #flatten the tuples
+        layers_bn_up = [item for bAndReLU in layers_bn_up for item in bAndReLU]
+
+        layers_unpooling = [
+            nn.MaxUnPool2d(pooling_kernel_sizes[i], stride=pooling_strides[i]) for i in range(4)
+        ]
+
+        #raise NotImplementedError('Upsampling layers are not implemented!')
 
         # Convert Python list to nn.ModuleList, so that PyTorch's autograd
         # can track gradients and update parameters of these layers
