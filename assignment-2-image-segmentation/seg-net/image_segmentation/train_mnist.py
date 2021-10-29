@@ -25,6 +25,7 @@ seed = 37
 random.seed(seed)
 torch.manual_seed(seed)
 if torch.cuda.is_available():
+    print("Pytorch found CUDA installed :)")
     torch.cuda.manual_seed_all(seed)
 
 np.random.seed(seed)
@@ -83,6 +84,8 @@ def main():
         gpus = []
     else:
         gpus = [int(i) for i in args.gpus.split(',')]
+
+    print("gpus found : ", gpus)
 
     # Define loss function (criterion) and optimizer
     if len(gpus) > 0:

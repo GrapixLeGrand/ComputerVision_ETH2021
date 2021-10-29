@@ -50,13 +50,11 @@ class SegNetLite(nn.Module):
         all the learnable parameters.
         """
         layers_bn_down = [
-            (nn.BatchNorm2d(c[i] * (kernel_sizes[i]**2 * c[i + 1] + 1)), nn.ReLU()) for i in range(4)
+            nn.BatchNorm2d(c[i + 1]) for i in range(4) # * (kernel_sizes[i]**2 * c[i + 1] + 1)
         ]
-        #flatten the tuples
-        layers_bn_down = [item for bAndReLU in layers_bn_down for item in bAndReLU]
 
         layers_pooling = [
-            nn.MaxPool2d(pooling_kernel_sizes[i], stride=pooling_strides[i]) for i in range(4)
+            nn.MaxPool2d(pooling_kernel_sizes[i], stride=pooling_strides[i], return_indices=True) for i in range(4)
         ]
 
         #raise NotImplementedError('Downsampling layers are not implemented!')
@@ -80,13 +78,11 @@ class SegNetLite(nn.Module):
         ]
 
         layers_bn_up = [
-            (nn.BatchNorm2d(up_c[i] * (kernel_sizes[i]**2 * up_c[i + 1] + 1)), nn.ReLU()) for i in range(4)
+            nn.BatchNorm2d(up_c[i + 1]) for i in range(4)
         ]
-        #flatten the tuples
-        layers_bn_up = [item for bAndReLU in layers_bn_up for item in bAndReLU]
 
         layers_unpooling = [
-            nn.MaxUnPool2d(pooling_kernel_sizes[i], stride=pooling_strides[i]) for i in range(4)
+            nn.MaxUnpool2d(pooling_kernel_sizes[i], stride=pooling_strides[i]) for i in range(4)
         ]
 
         #raise NotImplementedError('Upsampling layers are not implemented!')
@@ -100,11 +96,36 @@ class SegNetLite(nn.Module):
         self.relu = nn.ReLU(True)
 
         # Implement a final 1x1 convolution to to get the logits of 11 classes (background + 10 digits)
-        raise NotImplementedError('Final convolution layer is not implemented!')
+        #raise NotImplementedError('Final convolution layer is not implemented!')
+        self.layer_final = nn.Sequential(
+          #nn.AdaptiveMaxPool2d((1, 1)), 
+          nn.Conv2d(in_channels=32, out_channels=11, kernel_size=1)#, # 1x1 because of the Kernel size
+          #nn.ReLU(inplace=True)
+        )
 
     def forward(self, x):
-        raise NotImplementedError('Forward function not implemented!')
+        #raise NotImplementedError('Forward function not implemented!')
+        
+        pooling_indices = []
 
+        """start by the downsampling part"""
+        for i in range(4):
+            
+            x = self.layers_conv_down[i](x)
+            x = self.layers_bn_down[i](x)
+            x = self.relu(x)
+            x, indices = self.layers_pooling[i](x)
+            pooling_indices.append(indices)
+        
+        for i in range(4):
+            x = self.layers_unpooling[i](x, pooling_indices[3 - i])
+            x = self.layers_conv_up[i](x)
+            x = self.layers_bn_up[i](x)
+            x = self.relu(x)
+            
+        
+        x = self.layer_final(x)
+        return x
 
 def get_seg_net(**kwargs):
 
