@@ -48,7 +48,6 @@ def update_point_batch(weight, X):
 def meanshift_step(X, bandwidth=2.5):
     X_ = X.clone()
     for i, x in enumerate(X):
-        #print("in step type of x: ", type(x), " type of X: ", type(X) )
         dist = distance(x, X)
         weight = gaussian(dist, bandwidth)
         X_[i] = update_point(weight, X)
@@ -68,7 +67,7 @@ def meanshift(X):
 scale = 0.25    # downscale the image to run faster
 
 # Load image and convert it to CIELAB space
-image = rescale(io.imread('cow.jpg'), scale, multichannel=True)
+image = rescale(io.imread('cow.jpg'), scale, multichannel=True) #image = rescale(io.imread('cow.jpg'), scale, multichannel=True)
 image_lab = color.rgb2lab(image)
 shape = image_lab.shape # record image shape
 image_lab = image_lab.reshape([-1, 3])  # flatten the image 
