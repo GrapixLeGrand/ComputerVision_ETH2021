@@ -17,9 +17,8 @@ def distance(x, X):
     return torch.sum((X - x) ** 2, 1) ** 0.5
 
 def distance_batch(x, X):
-    #raise NotImplementedError('distance_batch function not implemented!')
-    
-    return torch.norm(x - X, dim=0) #torch.sum((X - x) ** 2, 1) ** 0.5
+    raise NotImplementedError('distance_batch function not implemented!')
+    #return torch.norm(x - X, dim=0) #torch.sum((X - x) ** 2, 1) ** 0.5
 
 #https://en.wikipedia.org/wiki/Radial_basis_function_kernel
 #looks like the bandwith is the sigma in the rbf after this post
@@ -42,20 +41,8 @@ def update_point(weight, X):
     return result
 
 def update_point_batch(weight, X):
-    print("update points X : ", X.size(), ", weight : ", weight.size())
-    #raise NotImplementedError('update_point_batch function not implemented!')
-    # unsqueeze weight (increase the whole dimension by 1: [] -> [[]])
-    # then expand this dimension by 3 with same elements
-    weight_ = torch.unsqueeze(weight, 0).expand(3, weight.size()[0])
-    weight_ = torch.transpose(weight_, 0, 1) #swap axis 0 and 1
-
-    #compute the shift as described here: https://en.wikipedia.org/wiki/Mean_shift
-    X_weighted_sum = torch.sum(weight_ * X, axis=0)
-    weight_sum = torch.sum(weight)
-
-    result = X_weighted_sum / weight_sum
-    #assert result.size() == X[0].size() # in case a ghost flattening happens
-    return result
+    raise NotImplementedError('update_point_batch function not implemented!')
+    
 
 def meanshift_step(X, bandwidth=2.5):
     X_ = X.clone()
@@ -66,24 +53,14 @@ def meanshift_step(X, bandwidth=2.5):
     return X_
 
 def meanshift_step_batch(X, bandwidth=2.5):
-    X = X.clone()
-
-    dists = distance_batch(X, X)
-    print("dist : ", dists.size())
-    print(dists)
-    weights = gaussian(dists, bandwidth)
-    X_ = update_point_batch(weights, X)
-
-    return X_
-
-    #raise NotImplementedError('meanshift_step_batch function not implemented!')
+    raise NotImplementedError('meanshift_step_batch function not implemented!')
 
 def meanshift(X):
     X = X.clone()
     for i in range(20):
         print("iteration: ", i)
-        #X = meanshift_step(X)   # slow implementation
-        X = meanshift_step_batch(X)   # fast implementation
+        X = meanshift_step(X)   # slow implementation
+        #X = meanshift_step_batch(X)   # fast implementation
     return X
 
 scale = 0.25    # downscale the image to run faster
@@ -97,9 +74,12 @@ image_lab = image_lab.reshape([-1, 3])  # flatten the image
 
 # Run your mean-shift algorithm
 t = time.time()
-#X = meanshift(torch.from_numpy(image_lab)).detach().cpu().numpy()
+X = meanshift(torch.from_numpy(image_lab)).detach().cpu().numpy()
+# time with CPU: 16.14677143096924 s
 
-X = meanshift(torch.from_numpy(image_lab).cuda()).detach().cpu().numpy()  # you can use GPU if you have one
+#X = meanshift(torch.from_numpy(image_lab).cuda()).detach().cpu().numpy()  # you can use GPU if you have one
+# time with GPU 11.671659469604492 s
+
 t = time.time() - t
 print ('Elapsed time for mean-shift: {}'.format(t))
 
