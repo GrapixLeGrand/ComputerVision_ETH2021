@@ -58,7 +58,6 @@ def main():
 
   # TODO
   # Denormalize P
-  
   P = np.linalg.inv(T2D) @ P_hat_opt @ T3D
 
   
@@ -66,7 +65,7 @@ def main():
   # Decompose P
   K, R, t = DecomposeP(P)
 
-  raise NotImplementedError('distance function not implemented!')
+  #raise NotImplementedError('distance function not implemented!')
   # Print the estimated values
   print(f'K=\n{K/K[2,2]}')
   print(f'R =\n{R}')

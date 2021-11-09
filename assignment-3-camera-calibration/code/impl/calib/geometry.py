@@ -1,4 +1,5 @@
 import numpy as np
+import scipy
 
 from impl.dlt import BuildProjectionConstraintMatrix
 from impl.util import HNormalize
@@ -47,9 +48,6 @@ def EstimateProjectionMatrix(points2D, points3D):
   """the constraint matrix is described in the slides :)"""
   constraint_matrix = BuildProjectionConstraintMatrix(points2D, points3D)
 
-  print("##### --> salut :)")
-  #print(constraint_matrix)
-
   # Solve for the nullspace
   _, _, vh = np.linalg.svd(constraint_matrix)
   P_vec = vh[-1,:] #take last row vector of vh
@@ -70,8 +68,10 @@ def DecomposeP(P):
 
   # TODO
   # Find K and R
-  K = None
-  R = None
+  K_inv, R_inv = np.linalg.qr(P[:,:3])
+
+  K = np.linalg.inv(K_inv)
+  R = np.linalg.inv(R_inv)
 
 
   # TODO
@@ -79,13 +79,26 @@ def DecomposeP(P):
   # We need to make sure that det(R) = 1 to have a proper rotation
   # We also want K to have a positive diagonal
 
+  if (np.linalg.det(R) < 0):
+    R = -R
+    R_inv = -R_inv
 
+  T = np.diag(np.sign(np.diag(K)))
+  T_inv = np.linalg.inv(T)
+  
+  K = K @ T
+  R = T_inv @ R
+
+  assert np.all(np.diag(K) > 0)
+  assert np.linalg.det(R) > 0
+  
   # TODO
   # Find the camera center C as the nullspace of P
-  C = None
-
+  C = scipy.linalg.null_space(P)
+  C /= C[3] # normalize since in homogenous coordinates
+  
   # TODO
   # Compute t from R and C
-  t = None
+  t = - R @ C[:3]
 
   return K, R, t
