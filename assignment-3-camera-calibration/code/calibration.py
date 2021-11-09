@@ -30,9 +30,22 @@ def main():
 
   # TODO
   # Normalize 2D and 3D points
-  normalized_points2D, T2D = 
-  normalized_points3D, T3D = 
+
+  """
+  a) We do need data normalization because we need to find the fundamental matrix. And in order
+  to find the fundamental matrix we need to solve a consequent linear system. Our data contains
+  noise and therefore contains an amount of error. Thus, this amount of errors grow up as when
+  performing the height points algorithm as the coefficients of the projected and backprojected 
+  points will get mulitplied (see course slide). This will not affect the correctness of the height
+  point algorithm as the system will still converge, it will just converge slower as opposed with
+  normalized data.
+  """
+
   
+  normalized_points2D, T2D = NormalizePoints2D(points2D, image_size) # array of 2D row vectors
+  normalized_points3D, T3D = NormalizePoints3D(points3D) # array of 3D row vectors
+  
+  """b) No answer for now """
   # TODO
   # Estimate the projection matrix from normalized correspondences
   P_hat = EstimateProjectionMatrix(normalized_points2D, normalized_points3D)
@@ -45,12 +58,15 @@ def main():
 
   # TODO
   # Denormalize P
-  P = 
+  
+  P = np.linalg.inv(T2D) @ P_hat_opt @ T3D
 
+  
   # TODO
   # Decompose P
   K, R, t = DecomposeP(P)
 
+  raise NotImplementedError('distance function not implemented!')
   # Print the estimated values
   print(f'K=\n{K/K[2,2]}')
   print(f'R =\n{R}')

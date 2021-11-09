@@ -10,9 +10,10 @@ def NormalizePoints3D(points):
   offsets = points - np.tile(center, (points.shape[0], 1))
   dists = np.linalg.norm(offsets, axis=1)
 
-  T_inv = np.eye(4) * np.mean(dists)
+  """T is a matrix that takes the points and normlize them"""
+  T_inv = np.eye(4) * np.mean(dists) # eye returns the identity matriy
   T_inv[3,3] = 1
-  T_inv[0:3,3] = center
+  T_inv[0:3,3] = center # set the last column of the matrix as a translation
 
   # Invert this so that after the transformation, the points are centered and their mean distance to the origin is 1
   T = np.linalg.inv(T_inv)
@@ -33,6 +34,7 @@ def NormalizePoints2D(points, image_size):
 
   T = np.linalg.inv(T_inv)
 
+  """they've added an homogenous 1 => 2D points as 3D vectors"""
   normalized_points2D = (T @ np.append(points, np.ones((points.shape[0], 1)), 1).transpose()).transpose()
 
   return normalized_points2D[:,0:2], T
@@ -42,14 +44,18 @@ def EstimateProjectionMatrix(points2D, points3D):
   
   # TODO Build constraint matrix
   # Hint: Pay attention to the assumed order of the vectorized P matrix. You will need the same order when rehaping the vector to the matrix later
+  """the constraint matrix is described in the slides :)"""
   constraint_matrix = BuildProjectionConstraintMatrix(points2D, points3D)
+
+  print("##### --> salut :)")
+  #print(constraint_matrix)
 
   # Solve for the nullspace
   _, _, vh = np.linalg.svd(constraint_matrix)
-  P_vec = vh[-1,:]
+  P_vec = vh[-1,:] #take last row vector of vh
 
   # TODO: Reshape the vector to a matrix (pay attention to the order)
-  P = 
+  P = P_vec.reshape((3, 4)) # maybe wrong
 
   return P
 
@@ -64,8 +70,8 @@ def DecomposeP(P):
 
   # TODO
   # Find K and R
-  K =
-  R =
+  K = None
+  R = None
 
 
   # TODO
@@ -76,10 +82,10 @@ def DecomposeP(P):
 
   # TODO
   # Find the camera center C as the nullspace of P
-  C = 
+  C = None
 
   # TODO
   # Compute t from R and C
-  t = 
+  t = None
 
   return K, R, t
