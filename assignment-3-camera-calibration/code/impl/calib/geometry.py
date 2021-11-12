@@ -68,11 +68,11 @@ def DecomposeP(P):
 
   # TODO
   # Find K and R
-  K_inv, R_inv = np.linalg.qr(P[:,:3])
+  # page 163 of the book RQ not QR
+  R_inv, K_inv = np.linalg.qr(np.linalg.inv(P[:,:3]))
 
   K = np.linalg.inv(K_inv)
   R = np.linalg.inv(R_inv)
-
 
   # TODO
   # It is possible that a sign was assigned to the wrong matrix during decomposition
@@ -90,15 +90,19 @@ def DecomposeP(P):
   R = T_inv @ R
 
   assert np.all(np.diag(K) > 0)
-  assert np.linalg.det(R) > 0
+  #assert np.linalg.det(R) > 0
   
   # TODO
   # Find the camera center C as the nullspace of P
-  C = scipy.linalg.null_space(P)
-  C /= C[3] # normalize since in homogenous coordinates
+  # Note: use svd ! (find out how)
+
+  _, _, vh = np.linalg.svd(P, full_matrices=True)
+  C = vh[-1,:] #take last row vector of vh
+  C /= C[3] # normalize
+  C = C[np.newaxis, :]
   
   # TODO
   # Compute t from R and C
-  t = - R @ C[:3]
+  t = - R @ C[:,:3].T
 
   return K, R, t

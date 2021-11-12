@@ -1,0 +1,8 @@
+[0m2021.11.09 21:20:23 INFO  Started: Metals version 0.10.9 in workspace '/home/quentin/Desktop/ETH/Courses/cv/assignment-3-camera-calibration' for client Visual Studio Code 1.62.0.[0m
+[0m2021.11.09 21:20:25 INFO  time: initialize in 1.8s[0m
+[0m2021.11.09 21:20:26 WARN  Build server is not auto-connectable.[0m
+[0m2021.11.09 21:20:26 WARN  no build tool detected in workspace '/home/quentin/Desktop/ETH/Courses/cv/assignment-3-camera-calibration'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.11.09 21:20:29 WARN  no build target for: /home/quentin/.cache/.fr-dHS2RT/funsets/src/main/scala/funsets/FunSets.scala[0m
+[0m2021.11.09 21:20:33 INFO  no build target: using presentation compiler with only scala-library: 3.1.0[0m
+[0m2021.11.09 21:20:37 INFO  time: code lens generation in 7.77s[0m
+[0m2021.11.09 23:56:21 INFO  shutting down Metals[0m

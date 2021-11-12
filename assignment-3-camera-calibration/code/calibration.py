@@ -45,7 +45,7 @@ def main():
   normalized_points2D, T2D = NormalizePoints2D(points2D, image_size) # array of 2D row vectors
   normalized_points3D, T3D = NormalizePoints3D(points3D) # array of 3D row vectors
   
-  """b) No answer for now """
+  """b) No answer for now page 88 of the book"""
   # TODO
   # Estimate the projection matrix from normalized correspondences
   P_hat = EstimateProjectionMatrix(normalized_points2D, normalized_points3D)
@@ -57,10 +57,9 @@ def main():
   print(f'Reprojection error after optimization: {np.linalg.norm(ImageResiduals(P_hat_opt, normalized_points2D, normalized_points3D))**2}')
 
   # TODO
-  # Denormalize P
+  # Denormalize P np.linalg.inv(T2D) 
   P = np.linalg.inv(T2D) @ P_hat_opt @ T3D
 
-  
   # TODO
   # Decompose P
   K, R, t = DecomposeP(P)

@@ -9,7 +9,6 @@ def ReprojectionError(P, point3D, point2D):
     # Project the 3D point into the image and compare it to the keypoint.
     # Make sure to properly normalize homogeneous coordinates.
 
-    # WARNING I don't do normalize !!
     PX = (P @ np.append(point3D, 1).T).T  # a 4D projected row vector
     PX /= PX[2] # not sure if that's normalizing
     x = point2D # a 3D row vector
