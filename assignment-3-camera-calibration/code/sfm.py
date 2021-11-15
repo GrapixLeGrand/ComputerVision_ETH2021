@@ -45,22 +45,26 @@ def main():
   # You can comment these lines once you verified that the images are loaded correctly
 
   # Show the images
-  PlotImages(images)
+  #PlotImages(images)
 
   # Show the keypoints
   for image_name in image_names:
-    PlotWithKeypoints(images[image_name])
+    #PlotWithKeypoints(images[image_name])
+    None 
 
   # Show the feature matches
   for image_pair in itertools.combinations(image_names, 2):
-    PlotImagePairMatches(images[image_pair[0]], images[image_pair[1]], matches[(image_pair[0], image_pair[1])])
+    #PlotImagePairMatches(images[image_pair[0]], images[image_pair[1]], matches[(image_pair[0], image_pair[1])])
     gc.collect()
+    None
   
   e_im1_name = image_names[init_images[0]]
   e_im2_name = image_names[init_images[1]]
   e_im1 = images[e_im1_name]
   e_im2 = images[e_im2_name]
   e_matches = GetPairMatches(e_im1_name, e_im2_name, matches)
+
+  print("matches: ",e_matches)
 
   # TODO Estimate relative pose of first pair
   # Estimate Fundamental matrix

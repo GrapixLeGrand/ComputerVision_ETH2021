@@ -13,10 +13,11 @@ from impl.sfm.corrs import GetPairMatches
 def EstimateEssentialMatrix(K, im1, im2, matches):
   # TODO
   # Normalize coordinates (to points on the normalized image plane)
-
   # These are the keypoints on the normalized image plane (not to be confused with the normalization in the calibration exercise)
-  normalized_kps1 = 
-  normalized_kps2 = 
+  
+  K_inv = np.linalg.inv(K)
+  normalized_kps1 = K_inv @ im1
+  normalized_kps2 = K_inv @ im2
 
   # TODO
   # Assemble constraint matrix
@@ -25,7 +26,7 @@ def EstimateEssentialMatrix(K, im1, im2, matches):
   for i in range(matches.shape[0]):
     # TODO
     # Add the constraints
-
+    None
   
   # Solve for the nullspace of the constraint matrix
   _, _, vh = np.linalg.svd(constraint_matrix)
@@ -33,13 +34,13 @@ def EstimateEssentialMatrix(K, im1, im2, matches):
 
   # TODO
   # Reshape the vectorized matrix to it's proper shape again
-  E_hat = 
+  E_hat = None
 
   # TODO
   # We need to fulfill the internal constraints of E
   # The first two singular values need to be equal, the third one zero.
   # Since E is up to scale, we can choose the two equal singluar values arbitrarily
-  E = 
+  E = None
 
   # This is just a quick test that should tell you if your estimated matrix is not correct
   # It might fail if you estimated E in the other direction (i.e. kp2' * E * kp1)
@@ -134,9 +135,9 @@ def TriangulatePoints(K, im1, im2, matches):
   # TODO
   # Filter points behind the cameras by transforming them into each camera space and checking the depth (Z)
   # Make sure to also remove the corresponding rows in `im1_corrs` and `im2_corrs`
-  points3D = 
-  im1_corrs = 
-  im2_corrs =
+  points3D = None
+  im1_corrs = None
+  im2_corrs = None
 
   return points3D, im1_corrs, im2_corrs
 
@@ -146,7 +147,7 @@ def EstimateImagePose(points2D, points3D, K):
   # We use points in the normalized image plane.
   # This removes the 'K' factor from the projection matrix.
   # We don't normalize the 3D points here to keep the code simpler.
-  normalized_points2D = 
+  normalized_points2D = None
 
   constraint_matrix = BuildProjectionConstraintMatrix(normalized_points2D, points3D)
 
