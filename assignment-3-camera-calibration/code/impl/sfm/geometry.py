@@ -36,6 +36,7 @@ def EstimateEssentialMatrix(K, im1, im2, matches):
   v = np.zeros(9)
   #v = v[:, None]
 
+  # see https://en.wikipedia.org/wiki/Eight-point_algorithm
   for i in range(matches.shape[0]):
     # TODO
     # Add the constraints
@@ -44,16 +45,16 @@ def EstimateEssentialMatrix(K, im1, im2, matches):
     y = normalized_kps2[match_i[1]]
 
     v[0] = x[0] * y[0]
-    v[1] = x[1] * y[0]
-    v[2] = x[2] * y[0]
+    v[1] = x[0] * y[1]
+    v[2] = x[0]
 
-    v[3] = x[0] * y[1]
+    v[3] = x[1] * y[0]
     v[4] = x[1] * y[1]
-    v[5] = x[2] * y[1]
+    v[5] = x[1]
 
-    v[6] = x[0] * y[2]
-    v[7] = x[1] * y[2]
-    v[8] = x[2] * y[2]
+    v[6] = y[0]
+    v[7] = y[1]
+    v[8] = 1
 
     constraint_matrix[i] = v
 
