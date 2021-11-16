@@ -10,9 +10,9 @@ class Image:
       keypoints_path = os.path.join(data_folder,'keypoints', name + '.txt')
 
       self.name = name
-      self.image = plt.imread(image_path)
-      self.kps = np.loadtxt(keypoints_path)
-      self.p3D_idxs = {}
+      self.image = plt.imread(image_path) #vector of rbg components
+      self.kps = np.loadtxt(keypoints_path) # the 2D points on the image
+      self.p3D_idxs = {} # I don't know
 
   # Set the image pose.
   # This is assumed to be the transformation from global space to image space

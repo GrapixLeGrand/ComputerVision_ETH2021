@@ -64,7 +64,9 @@ def main():
   e_im2 = images[e_im2_name]
   e_matches = GetPairMatches(e_im1_name, e_im2_name, matches)
 
-  print("matches: ",e_matches)
+  #print("e_im1: ", e_im1_name)
+  #print("k: ",K)
+  #print(e_im1.kps)
 
   # TODO Estimate relative pose of first pair
   # Estimate Fundamental matrix

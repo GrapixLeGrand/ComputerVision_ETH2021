@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.lib.function_base import append
 
 from impl.dlt import BuildProjectionConstraintMatrix
 from impl.util import MakeHomogeneous, HNormalize
@@ -15,32 +16,65 @@ def EstimateEssentialMatrix(K, im1, im2, matches):
   # Normalize coordinates (to points on the normalized image plane)
   # These are the keypoints on the normalized image plane (not to be confused with the normalization in the calibration exercise)
   
+  #ones = np.ones(im1.kps.shape[0])
+  #ones = ones[:, None]
+
+  im1_pts = np.append(im1.kps, np.ones(im1.kps.shape[0])[:, None], axis=1)
+  im2_pts = np.append(im2.kps, np.ones(im2.kps.shape[0])[:, None], axis=1)
+
+  print(im1_pts)
+
   K_inv = np.linalg.inv(K)
-  normalized_kps1 = K_inv @ im1
-  normalized_kps2 = K_inv @ im2
+  normalized_kps1 = (K_inv @ im1_pts.T).T
+  normalized_kps2 = (K_inv @ im2_pts.T).T
+
+  
 
   # TODO
   # Assemble constraint matrix
   constraint_matrix = np.zeros((matches.shape[0], 9))
+  v = np.zeros(9)
+  #v = v[:, None]
 
   for i in range(matches.shape[0]):
     # TODO
     # Add the constraints
-    None
-  
+    match_i = matches[i]
+    x = normalized_kps1[match_i[0]]
+    y = normalized_kps2[match_i[1]]
+
+    v[0] = x[0] * y[0]
+    v[1] = x[1] * y[0]
+    v[2] = x[2] * y[0]
+
+    v[3] = x[0] * y[1]
+    v[4] = x[1] * y[1]
+    v[5] = x[2] * y[1]
+
+    v[6] = x[0] * y[2]
+    v[7] = x[1] * y[2]
+    v[8] = x[2] * y[2]
+
+    constraint_matrix[i] = v
+
   # Solve for the nullspace of the constraint matrix
   _, _, vh = np.linalg.svd(constraint_matrix)
   vectorized_E_hat = vh[-1,:]
-
+  print(vectorized_E_hat)
   # TODO
   # Reshape the vectorized matrix to it's proper shape again
-  E_hat = None
+  E_hat = vectorized_E_hat.reshape((3, 3))
 
   # TODO
   # We need to fulfill the internal constraints of E
   # The first two singular values need to be equal, the third one zero.
   # Since E is up to scale, we can choose the two equal singluar values arbitrarily
-  E = None
+  U, D, V = np.linalg.svd(E_hat)
+  EI = np.eye(3)
+  EI[0][0] = D[0]
+  EI[1][1] = D[0]
+  EI[2][2] = 0
+  E = U @ EI @ V
 
   # This is just a quick test that should tell you if your estimated matrix is not correct
   # It might fail if you estimated E in the other direction (i.e. kp2' * E * kp1)
@@ -49,6 +83,7 @@ def EstimateEssentialMatrix(K, im1, im2, matches):
     kp1 = normalized_kps1[matches[i,0],:]
     kp2 = normalized_kps2[matches[i,1],:]
 
+    print("VALS ",abs(kp1.transpose() @ E @ kp2))
     assert(abs(kp1.transpose() @ E @ kp2) < 0.01)
 
   return E
