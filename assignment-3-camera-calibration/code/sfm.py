@@ -201,13 +201,14 @@ def main():
       """
       Given the matches that we have found in the two first images of the first part
       We want to find the 2D correspondance on the current image if there are ones.
-      This process will iterate over all images 
+      This process will iterate over all images. We retain the 2D-2D correspondances
+      and the related 2D-3D correspondances.
       """
       # Find 2D-3D correspondences
       image_kp_idxs, point3D_idxs = Find2D3DCorrespondences(image_name, images, matches, registered_images)
 
       """
-      If we could find enought corresondances we will register the image
+      If we could find enough corresondances we will register the image
       """
       # With two few correspondences the pose estimation becomes shaky.
       # Keep this image for later

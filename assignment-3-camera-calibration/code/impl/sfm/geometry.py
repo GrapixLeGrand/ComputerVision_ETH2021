@@ -261,7 +261,14 @@ def TriangulateImage(K, image_name, images, registered_images, matches):
   # Afterwards you just add the index offset before adding the correspondences to the images.
   corrs = {}
 
-  
+  for registered in registered_images:
+
+    registered_image = images[registered]  
+    points3D_fresh, im_corrs, r_corrs = TriangulatePoints(K, image, registered, matches)
+
+    points3D_fresh_filtered, indices = None
+    im_corrs_filtered = None
+    r_corrs_filtered = None
 
   return points3D, corrs
   
