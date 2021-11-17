@@ -1,5 +1,9 @@
 import numpy as np
 
+"""
+returns the indices of correspondance on the image to the other images. And also
+from the 2D image to the 3D points
+"""
 # Find (unique) 2D-3D correspondences from 2D-2D correspondences
 def Find2D3DCorrespondences(image_name, images, matches, registered_images):
   assert(image_name not in registered_images)

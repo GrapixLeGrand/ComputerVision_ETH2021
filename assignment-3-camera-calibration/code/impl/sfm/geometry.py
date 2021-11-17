@@ -22,13 +22,9 @@ def EstimateEssentialMatrix(K, im1, im2, matches):
   im1_pts = np.append(im1.kps, np.ones(im1.kps.shape[0])[:, None], axis=1)
   im2_pts = np.append(im2.kps, np.ones(im2.kps.shape[0])[:, None], axis=1)
 
-  print(im1_pts)
-
   K_inv = np.linalg.inv(K)
   normalized_kps1 = (K_inv @ im1_pts.T).T
   normalized_kps2 = (K_inv @ im2_pts.T).T
-
-  
 
   # TODO
   # Assemble constraint matrix
@@ -61,7 +57,7 @@ def EstimateEssentialMatrix(K, im1, im2, matches):
   # Solve for the nullspace of the constraint matrix
   _, _, vh = np.linalg.svd(constraint_matrix)
   vectorized_E_hat = vh[-1,:]
-  print(vectorized_E_hat)
+  
   # TODO
   # Reshape the vectorized matrix to it's proper shape again
   E_hat = vectorized_E_hat.reshape((3, 3))
@@ -141,6 +137,8 @@ def TriangulatePoints(K, im1, im2, matches):
     if p3d_idx1 == -1 and p3d_idx2 == -1:
       new_matches = np.append(new_matches, matches[[i]], 0)
 
+  #print(new_matches)
+  #raise Exception("no")
 
   num_new_matches = new_matches.shape[0]
 
@@ -151,6 +149,10 @@ def TriangulatePoints(K, im1, im2, matches):
     kp1 = im1.kps[new_matches[i, 0], :]
     kp2 = im2.kps[new_matches[i, 1], :]
 
+    """
+    Here we solve Ax = 0 where A is constrained with the two matches and 
+    Pi is the projection matrix of image i. Here x is the 3D point.
+    """
     # H & Z Sec. 12.2
     A = np.array([
       kp1[0] * P1[2] - P1[0],
@@ -161,6 +163,7 @@ def TriangulatePoints(K, im1, im2, matches):
 
     _, _, vh = np.linalg.svd(A)
     homogeneous_point = vh[-1]
+    #take all but the last elements and divide them by the last
     points3D[i] = homogeneous_point[:-1] / homogeneous_point[-1]
 
 
@@ -171,9 +174,41 @@ def TriangulatePoints(K, im1, im2, matches):
   # TODO
   # Filter points behind the cameras by transforming them into each camera space and checking the depth (Z)
   # Make sure to also remove the corresponding rows in `im1_corrs` and `im2_corrs`
-  points3D = None
-  im1_corrs = None
-  im2_corrs = None
+
+  #print(np.unique(points3D, axis=1))
+  #raise Exception("no")
+
+  idx1 = np.arange(points3D.shape[0])
+  idx2 = np.arange(points3D.shape[0])
+
+  # make 3D points homogenous
+  points3DH = np.append(points3D, np.ones(points3D.shape[0])[:, None], axis=1)
+  
+  Cam1 = np.append(R1, np.expand_dims(t1, 1), 1)
+  Cam2 = np.append(R2, np.expand_dims(t2, 1), 1)
+
+  # Wait.. project each 3D points on both images
+  points3DCam1 = (K @ Cam1 @ points3DH.T).T
+  points3DCam2 = (K @ Cam2 @ points3DH.T).T
+
+  # extract the Z component of each
+  Z1 = points3DCam1[:, 2]
+  Z2 = points3DCam2[:, 2]
+
+  # find the indices that fullfils a positive Z
+  # on both images
+  idx1 = idx1[Z1[idx1] > 0]
+  idx2 = idx2[Z2[idx2] > 0]
+
+  idx = np.intersect1d(idx1, idx2)
+
+  #print(idx)
+  points3D = points3D[idx]
+  #print(points3D)
+  #raise Exception("no")
+
+  im1_corrs = im1_corrs[idx]
+  im2_corrs = im2_corrs[idx]
 
   return points3D, im1_corrs, im2_corrs
 
@@ -183,7 +218,11 @@ def EstimateImagePose(points2D, points3D, K):
   # We use points in the normalized image plane.
   # This removes the 'K' factor from the projection matrix.
   # We don't normalize the 3D points here to keep the code simpler.
-  normalized_points2D = None
+
+  points2DH = np.append(points2D, np.ones(points2D.shape[0])[:, None], axis=1)
+
+  K_inv = np.linalg.inv(K)
+  normalized_points2D = (K_inv @ points2DH.T).T
 
   constraint_matrix = BuildProjectionConstraintMatrix(normalized_points2D, points3D)
 
@@ -222,7 +261,7 @@ def TriangulateImage(K, image_name, images, registered_images, matches):
   # Afterwards you just add the index offset before adding the correspondences to the images.
   corrs = {}
 
-
+  
 
   return points3D, corrs
   
