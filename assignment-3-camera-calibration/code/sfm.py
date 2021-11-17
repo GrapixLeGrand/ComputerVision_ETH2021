@@ -84,6 +84,9 @@ def main():
 
   K = ReadKMatrix(data_folder)
 
+  """
+  We select arbitrarily the images that we will register to start the algorithm.
+  """
   init_images = [3, 4]
 
   # Visualize images and features
@@ -180,7 +183,12 @@ def main():
   find at least 50 points on it that would belong to other images too.
 
   We are trying to reconstruct the positions of the camera in 3D from the sequence of image.
-  The algorithm registered first two images.
+  The algorithm registered first two images (selected arbitrarily). We then extracted 3D points
+  from those two first images by finding the correspondance matrix E and by triangulating all the
+  3D points. We know want to register all the other images. This means that for a non-registered
+  2D image we want to find some correspondances (at least 50 points) as in those that matched 
+  until know. We will then do as in the first part, try to estimate the pose and validate it
+  by triangulating the points. We are done once we could do it for all images.
   """
   # Register new images + triangulate
   # Run until we can register all images
