@@ -27,9 +27,11 @@ class Image:
   # Add a new 2D-3D correspondence to the image
   # The function expects two equal length lists of indices, the first one with the
   # keypoint index in the image, the second one with the 3D point index in the reconstruction.
+
+  #kp_idx = indices of the 2D matches, p3D_idxs = indices of the 3D matches
   def Add3DCorrs(self, kp_idxs, p3D_idxs):
     for corr in zip(kp_idxs, p3D_idxs):
-      self.p3D_idxs[corr[0]] = corr[1]
+      self.p3D_idxs[corr[0]] = corr[1] #for each [p2D, p3D] we are adding the index of the 3D points
 
   # Get the 3D point associated with the given keypoint.
   # Will return -1 if no correspondence is set for this keypoint.

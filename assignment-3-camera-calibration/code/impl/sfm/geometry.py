@@ -1,3 +1,4 @@
+from os import EX_CANTCREAT
 import numpy as np
 from numpy.lib.function_base import append
 
@@ -187,9 +188,9 @@ def TriangulatePoints(K, im1, im2, matches):
   Cam1 = np.append(R1, np.expand_dims(t1, 1), 1)
   Cam2 = np.append(R2, np.expand_dims(t2, 1), 1)
 
-  # Wait.. project each 3D points on both images
-  points3DCam1 = (K @ Cam1 @ points3DH.T).T
-  points3DCam2 = (K @ Cam2 @ points3DH.T).T
+  # project each 3D points on both images
+  points3DCam1 = (P1 @ points3DH.T).T
+  points3DCam2 = (P2 @ points3DH.T).T
 
   # extract the Z component of each
   Z1 = points3DCam1[:, 2]
@@ -197,8 +198,8 @@ def TriangulatePoints(K, im1, im2, matches):
 
   # find the indices that fullfils a positive Z
   # on both images
-  idx1 = idx1[Z1[idx1] > 0]
-  idx2 = idx2[Z2[idx2] > 0]
+  idx1 = idx1[Z1[idx1] >= 0]
+  idx2 = idx2[Z2[idx2] >= 0]
 
   idx = np.intersect1d(idx1, idx2)
 
@@ -255,20 +256,23 @@ def TriangulateImage(K, image_name, images, registered_images, matches):
   # Loop over all registered images and triangulate new points with the new image.
   # Make sure to keep track of all new 2D-3D correspondences, also for the registered images
 
-  image = images[image_name]
+  current_image = images[image_name] # get the current image
   points3D = np.zeros((0,3))
+
   # You can save the correspondences for each image in a dict and refer to the `local` new point indices here.
   # Afterwards you just add the index offset before adding the correspondences to the images.
   corrs = {}
 
   for registered in registered_images:
 
-    registered_image = images[registered]  
-    points3D_fresh, im_corrs, r_corrs = TriangulatePoints(K, image, registered, matches)
+    registered_image = images[registered]
+    current_matches = matches[(image_name, registered)]
+    points3D_fresh, im_corrs, r_corrs = TriangulatePoints(K, current_image, registered_image, current_matches)
 
-    points3D_fresh_filtered, indices = None
-    im_corrs_filtered = None
-    r_corrs_filtered = None
+    if (points3D_fresh.shape[0] > 0):
+      points3D = np.append(points3D, points3D_fresh, axis=0)
+      corrs[image_name] = im_corrs
+      corrs[registered] = r_corrs
 
   return points3D, corrs
   

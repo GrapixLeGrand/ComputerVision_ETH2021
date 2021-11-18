@@ -133,13 +133,13 @@ def main():
   # We can assume that the correct solution is the one that gives the most points in front of both cameras
   # Be careful not to set the transformation in the wrong direction
   
-  # TODO
-  # Set the image poses in the images (image.SetPose(...))
   points3D  = None
   im1_corrs = None
   im2_corrs = None
   is_first  = True
   min_behind = 0
+  best_index = 0
+  index = 0
 
   for R, t in possible_relative_poses:
     e_im1.SetPose(R, t)
@@ -147,24 +147,29 @@ def main():
     try3D, try_im1_corrs, try_im2_corrs = TriangulatePoints(K, e_im1, e_im2, e_matches)
     behind = try3D.shape[0]
     #print("b: ", behind)
-    if (is_first or behind > min_behind):
+    if (is_first or behind >= min_behind):
       #print("pts: ", points3D)
       points3D = try3D
       im1_corrs = try_im1_corrs
       im2_corrs = try_im2_corrs
       min_behind = behind
       is_first = False
+      best_index = index
+    index += 1
   
   assert points3D is not None, "points None"
   assert points3D.shape[0] != 0, "empty 3Dpoints !"
   assert im1_corrs is not None, "correlations 1 None"
   assert im1_corrs is not None, "correlations 2 None"
   
-  #print(points3D)
-  #raise Exception("no")
-  
   # TODO Triangulate initial points
   #points3D, im1_corrs, im2_corrs = TriangulatePoints(K, e_im1, e_im2, e_matches)
+
+  # TODO
+  # Set the image poses in the images (image.SetPose(...))
+  R_best, t_best = possible_relative_poses[best_index]
+  e_im1.SetPose(R_best, t_best)
+  e_im2.SetPose(np.eye(3), np.zeros(t.shape))
 
   # Add the new 2D-3D correspondences to the images
   e_im1.Add3DCorrs(im1_corrs, list(range(points3D.shape[0])))
@@ -197,8 +202,11 @@ def main():
       
       if image_name in registered_images:
         continue
-      
       """
+        matches is a map that contains for each pair the matching points between
+        two images pairs
+        ('0008.png', '0009.png'): {[[ ... ]]}
+    
       Given the matches that we have found in the two first images of the first part
       We want to find the 2D correspondance on the current image if there are ones.
       This process will iterate over all images. We retain the 2D-2D correspondances
@@ -230,7 +238,7 @@ def main():
       images[image_name].Add3DCorrs(image_kp_idxs, point3D_idxs)
 
       # TODO
-      # Triangulate new points wth all previously registered images
+      # Triangulate new points with all previously registered images
       image_points3D, corrs = TriangulateImage(K, image_name, images, registered_images, matches)
 
       # TODO
