@@ -54,20 +54,3 @@ def UpdateReconstructionState(new_points3D, corrs, points3D, images):
     images[im_name].Add3DCorrs(corr, np.arange(l, u) + offset)
     
   return points3D, images
-
-"""
-    img_1 = im_name[0]
-    img_2 = im_name[1]
-
-    corr_1 = corrs[im_name][0]
-    corr_2 = corrs[im_name][1]
-
-    pts_fresh = corrs[im_name][2]
-    _, all_new_idx, current_new_idx = np.intersect1d(new_points3D, pts_fresh, return_indices=True)
-
-    print(all_new_idx, " new ", all_new_idx.shape[0])
-    print(current_new_idx, " cur ", current_new_idx.shape[0])
-  
-    images[img_1].Add3DCorrs(corr_1, current_new_idx + offset)
-    images[img_2].Add3DCorrs(corr_2, current_new_idx + offset)
-"""

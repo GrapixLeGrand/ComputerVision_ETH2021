@@ -10,50 +10,6 @@ from impl.sfm.image import Image
 from impl.sfm.io import ReadFeatureMatches, ReadKMatrix
 from impl.sfm.vis import PlotImages, PlotWithKeypoints, PlotImagePairMatches, PlotCameras
 
-"""
-def points_in_front(im1, im2, K, R, t, matches):
-
-  x_pts = im1.kps #np.append(im1, np.ones(im1.kps.shape[0])[:, None], axis=1)
-  y_pts = im2.kps #np.append(im2.kps, np.ones(im2.kps.shape[0])[:, None], axis=1)
-
-  im1_pts = np.append(im1.kps, np.ones(im1.kps.shape[0])[:, None], axis=1)
-  im2_pts = np.append(im2.kps, np.ones(im2.kps.shape[0])[:, None], axis=1)
-
-  K_inv = np.linalg.inv(K)
-  x_pts = (K_inv @ im1_pts.T).T
-  y_pts = (K_inv @ im2_pts.T).T
-
-  P_x = np.append(R, np.expand_dims(t, 1), 1)
-  P_y = np.append(np.eye(3), np.expand_dims(np.zeros(3),1), 1)
-
-  A = np.zeros((4, 4))
-
-  X_pts = np.zeros((matches.shape[0], 3)) # the triangulated points
-
-  #set points
-  for i in range(matches.shape[0]):
-
-    match_i = matches[i]
-    x = x_pts[match_i[0]]
-    y = y_pts[match_i[1]]
-
-    A[0] = x[0] * P_x[2] - P_x[0]
-    A[1] = x[1] * P_x[2] - P_x[1]
-    
-    A[2] = y[0] * P_y[2] - P_y[0]
-    A[3] = y[1] * P_y[2] - P_y[1]
-
-    _, _, vh = np.linalg.svd(A)
-    X_tri = vh[-1,:]
-    X_tri /= X_tri[3]
-
-    X_pts[i] = X_tri[:3]
-
-  X_z = X_pts[:, 2]
-  behind = np.count_nonzero(np.where(X_z < 0))
-
-  return X_pts, behind
-"""
 
 def main():
 
@@ -87,7 +43,7 @@ def main():
   """
   We select arbitrarily the images that we will register to start the algorithm.
   """
-  init_images = [3, 4]
+  init_images = [1, 2] #[3, 4]
 
   # Visualize images and features
   # You can comment these lines once you verified that the images are loaded correctly
@@ -181,7 +137,6 @@ def main():
   for reg_im in registered_images:
     print(f'Image {reg_im} sees {images[reg_im].NumObserved()} 3D points')
 
-  #raise Exception("no")
 
   """
   We will triangulate all images successively. Each image is registered if we can
