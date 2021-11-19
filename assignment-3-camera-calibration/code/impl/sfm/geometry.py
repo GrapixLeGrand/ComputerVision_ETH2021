@@ -258,6 +258,7 @@ def TriangulateImage(K, image_name, images, registered_images, matches):
 
   current_image = images[image_name] # get the current image
   points3D = np.zeros((0,3))
+  curr_image_2D_idx = np.zeros((0,))
 
   # You can save the correspondences for each image in a dict and refer to the `local` new point indices here.
   # Afterwards you just add the index offset before adding the correspondences to the images.
@@ -266,13 +267,29 @@ def TriangulateImage(K, image_name, images, registered_images, matches):
   for registered in registered_images:
 
     registered_image = images[registered]
-    current_matches = matches[(image_name, registered)]
+    current_matches = GetPairMatches(image_name, registered, matches)
     points3D_fresh, im_corrs, r_corrs = TriangulatePoints(K, current_image, registered_image, current_matches)
 
     if (points3D_fresh.shape[0] > 0):
+      
+      corrs[registered] = (r_corrs, (points3D.shape[0], points3D.shape[0] + points3D_fresh.shape[0]))
+      curr_image_2D_idx = np.append(curr_image_2D_idx, im_corrs, axis=0)
       points3D = np.append(points3D, points3D_fresh, axis=0)
-      corrs[image_name] = im_corrs
-      corrs[registered] = r_corrs
+  
+  # add the correspondance for the last image
+  corrs[image_name] = (curr_image_2D_idx, (0, points3D.shape[0]))
 
   return points3D, corrs
-  
+
+"""
+
+if (image_name < registered):
+      current_matches = matches[(image_name, registered)]
+    else:
+      current_matches = matches[(registered, image_name)]
+
+if (image_name < registered):
+  corrs[(image_name, registered)] = (im_corrs, r_corrs, (points3D.shape[0], points3D.shape[0] + points3D_fresh.shape[0]))
+else:
+  corrs[(registered, image_name)] = (r_corrs, im_corrs, (points3D.shape[0], points3D.shape[0] + points3D_fresh.shape[0]))
+"""
