@@ -2,13 +2,22 @@ import numpy as np
 from matplotlib import pyplot as plt
 import random
 
+# to install open3d : sudo pip3 install open3d==0.13.0
+
 np.random.seed(0)
 random.seed(0)
+
+
 
 def least_square(x,y):
 	# TODO
 	# return the least-squares solution
 	# you can use np.linalg.lstsq
+
+	# build the constraint matrix
+	A = np.vstack([x, np.ones(len(x))]).T
+	k, b = np.linalg.lstsq(A, y, rcond=None)[0]
+
 	return k, b
 
 def num_inlier(x,y,k,b,n_samples,thres_dist):
@@ -22,10 +31,46 @@ def num_inlier(x,y,k,b,n_samples,thres_dist):
 def ransac(x,y,iter,n_samples,thres_dist,num_subset):
 	# TODO
 	# ransac
+
 	k_ransac = None
 	b_ransac = None
 	inlier_mask = None
 	best_inliers = 0
+
+	i = 0
+	while i < iter:
+
+		# 1: randomly choose a small subset
+		samples_indices = np.random.choice(num_subset, num_subset, replace=False)
+		rest_indices = np.setdiff1d(np.arange(n_samples), samples_indices)
+
+		x_samples = x[samples_indices]
+		y_samples = y[samples_indices]
+
+		#x_rest = x[rest_indices]
+		#y_rest = y[rest_indices]
+
+		# 2 : compute the least-squares solution for this subset
+
+		k_ransac, b_ransac = least_square(x_samples, y_samples)
+
+		# 3 : compute the number of inliers and the mask denotes the indices ofinliers
+		
+		# we need to compute the distance of the rest to the line
+		dists = np.abs(y - k_ransac * x - b_ransac) / np.sqrt(1 + k_ransac**2)
+		current_inlier_mask = dists < thres_dist
+		current_inliner_num = len(np.where(dists < thres_dist))
+
+		# 4 : update best result if num_inliner is more than best
+		if (current_inliner_num > best_inliers):
+			best_inliers = len(current_inlier_mask)
+			inlier_mask = current_inlier_mask
+			#if (inlier_mask is None):
+			#	inlier_mask = current_inlier_mask
+			#else:
+			#	inlier_mask = np.union1d(inlier_mask, current_inlier_mask)
+
+		i += 1
 
 	return k_ransac, b_ransac, inlier_mask
 
