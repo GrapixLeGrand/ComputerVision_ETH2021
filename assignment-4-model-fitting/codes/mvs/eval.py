@@ -29,19 +29,26 @@ parser.add_argument('--outdir', default='./outputs', help='output dir')
 parser.add_argument('--display', action='store_true', help='display depth images and masks')
 
 
-"""
-custom here
-"""
-
-"""
-end custom here
-"""
 
 # parse arguments and check
 args = parser.parse_args()
 print("argv:", sys.argv[1:])
 print_args(args)
 
+"""
+custom here
+"""
+
+args.trainpath = "./dtu_dataset/"
+args.trainlist = "lists/dtu/train.txt"
+
+args.testpath = "./dtu_dataset/"
+args.testlist = "lists/dtu/val.txt"
+args.logdir = "./checkpoints"
+
+"""
+end custom here
+"""
 
 
 # read a binary mask

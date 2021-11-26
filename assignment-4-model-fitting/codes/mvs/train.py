@@ -49,6 +49,28 @@ if args.resume:
 if args.testpath is None:
     args.testpath = args.trainpath
 
+"""
+SET CUSTOM ARGS HERE
+"""
+
+args.trainpath = "./dtu_dataset/"
+args.trainlist = "lists/dtu/train.txt"
+
+args.testpath = "./dtu_dataset/"
+args.testlist = "lists/dtu/val.txt"
+args.logdir = "./checkpoints"
+
+#args.dataset = dtu
+#args.trainpath = "./dtu_dataset/"
+
+#MVS_TRAINING="./dtu_dataset/"
+#python train.py --dataset=dtu --batch_size=2 --epochs 4 \
+#--trainpath=$MVS_TRAINING --trainlist lists/dtu/train.txt --testlist lists/dtu/val.txt --numdepth=192 --logdir ./checkpoints $@
+"""
+END CUSTOM ARGS HERE
+"""
+
+
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 
@@ -70,7 +92,7 @@ print_args(args)
 MVSDataset = find_dataset_def(args.dataset)
 train_dataset = MVSDataset(args.trainpath, args.trainlist, "train", 3, args.numdepth)
 test_dataset = MVSDataset(args.testpath, args.testlist, "val", 3, args.numdepth)
-TrainImgLoader = DataLoader(train_dataset, args.batch_size, shuffle=True, num_workers=4, drop_last=True)
+TrainImgLoader = DataLoader(train_dataset, args.batch_size, shuffle=True, num_workers=0, drop_last=True)
 TestImgLoader = DataLoader(test_dataset, args.batch_size, shuffle=False, num_workers=4, drop_last=False)
 
 # model, optimizer

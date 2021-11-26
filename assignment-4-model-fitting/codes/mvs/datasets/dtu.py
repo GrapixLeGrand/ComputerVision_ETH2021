@@ -18,6 +18,7 @@ class MVSDataset(Dataset):
 
     def build_list(self):
         metas = []
+        a = os.listdir()
         with open(self.listfile) as f:
             scans = f.readlines()
             scans = [line.rstrip() for line in scans]

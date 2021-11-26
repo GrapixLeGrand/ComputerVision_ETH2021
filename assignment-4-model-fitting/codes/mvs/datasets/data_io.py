@@ -2,14 +2,43 @@ import numpy as np
 import re
 import sys
 from PIL import Image
+from torch.functional import norm
 
 def read_cam_file(filename):
+
     # TODO
+    with open(filename, "r") as data:
+
+        # convert list of str to list of list of str where each element is either a float or a keyword
+        lines = [line.split(sep=" ") for line in data]
+
+        extrinsics = np.zeros((4, 4))
+        
+        #iterate over the right parts (skip extrinsics)
+        for i in range(0, 4):
+            extrinsics[i] = np.array(lines[i + 1]).astype(float)
+
+        intrinsics = np.zeros((3, 3))
+
+        #iterate over the right parts (skip intrisics + beginning)
+        for i in range(0, 3):
+            extrinsics[i] = np.array(lines[i + 7]).astype(float)
+
+        depth_min = float(lines[11][0])
+        depth_max = float(lines[11][1])
+
     return intrinsics, extrinsics, depth_min, depth_max
 
 def read_img(filename):
-    print("hello")
-    return np_img
+    # data is a (width, height, 3) array
+
+    img_frame = Image.open(filename)
+    data = np.array(img_frame.getdata())
+
+    #CORRECT ?
+    normalized = np.array(data, dtype=np.float32) / 255.0
+
+    return normalized #np_img
 
 def read_depth(filename):
     # read pfm depth file
@@ -23,7 +52,9 @@ def read_pfm(filename):
     scale = None
     endian = None
 
-    header = file.readline().decode('utf-8').rstrip()
+    ll = file.readline()
+    print(ll)
+    header = ll.decode(encoding='utf-8').rstrip()
     if header == 'PF':
         color = True
     elif header == 'Pf':

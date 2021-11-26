@@ -7,12 +7,57 @@ class FeatureNet(nn.Module):
     def __init__(self):
         super(FeatureNet, self).__init__()
         # TODO
-        None
+        
+        self.layers = nn.Sequential(
+            
+            #layer 1
+            nn.Conv2d(3, 8, (3, 3), stride=1, padding=1),
+            nn.BatchNorm2d(8),
+            nn.ReLU(),
+
+            #layer 2
+            nn.Conv2d(8, 8, (3, 3), stride=1, padding=1),
+            nn.BatchNorm2d(8),
+            nn.ReLU(),
+
+            #layer 3
+            nn.Conv2d(8, 16, (5, 5), stride=2, padding=2),
+            nn.BatchNorm2d(16),
+            nn.ReLU(),
+
+            #layer 4
+            nn.Conv2d(16, 16, (3, 3), stride=1, padding=1),
+            nn.BatchNorm2d(16),
+            nn.ReLU(),
+
+            #layer 5
+            nn.Conv2d(16, 16, (3, 3), stride=1, padding=1),
+            nn.BatchNorm2d(16),
+            nn.ReLU(),
+
+            #layer 6
+            nn.Conv2d(16, 32, (5, 5), stride=2, padding=2),
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+
+            #layer 7
+            nn.Conv2d(32, 32, (3, 3), stride=1, padding=1),
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+
+            #layer 8
+            nn.Conv2d(32, 32, (3, 3), stride=1, padding=1),
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+
+            #layer 9
+            nn.Conv2d(32, 32, (3, 3), stride=1, padding=1)
+        )
 
     def forward(self, x):
-        # x: [B,3,H,W]
+        # x: [B,3,H,W] # B, CHAnnels, Height, Width
         # TODO
-        None
+        return self.layers(x)
 
 
 class SimlarityRegNet(nn.Module):
