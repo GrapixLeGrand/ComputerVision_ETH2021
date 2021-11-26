@@ -8,7 +8,7 @@ def read_cam_file(filename):
     return intrinsics, extrinsics, depth_min, depth_max
 
 def read_img(filename):
-    # TODO
+    print("hello")
     return np_img
 
 def read_depth(filename):

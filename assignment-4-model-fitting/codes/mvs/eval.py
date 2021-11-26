@@ -28,6 +28,15 @@ parser.add_argument('--loadckpt', default=None, help='load a specific checkpoint
 parser.add_argument('--outdir', default='./outputs', help='output dir')
 parser.add_argument('--display', action='store_true', help='display depth images and masks')
 
+
+"""
+custom here
+"""
+
+"""
+end custom here
+"""
+
 # parse arguments and check
 args = parser.parse_args()
 print("argv:", sys.argv[1:])

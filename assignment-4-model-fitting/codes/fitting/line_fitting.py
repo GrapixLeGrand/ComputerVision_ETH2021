@@ -8,6 +8,12 @@ np.random.seed(0)
 random.seed(0)
 
 
+"""
+Result:
+
+Estimated coefficients (true, linear regression, RANSAC):
+1 10 0.6159656578755459 8.96172714144364 -0.03375667936107611 0.9620120681666525
+"""
 
 def least_square(x,y):
 	# TODO

@@ -7,21 +7,25 @@ class FeatureNet(nn.Module):
     def __init__(self):
         super(FeatureNet, self).__init__()
         # TODO
+        None
 
     def forward(self, x):
         # x: [B,3,H,W]
         # TODO
+        None
 
 
 class SimlarityRegNet(nn.Module):
     def __init__(self, G):
         super(SimlarityRegNet, self).__init__()
+        None
         # TODO
 
     def forward(self, x):
         # x: [B,G,D,H,W]
         # out: [B,D,H,W]
         # TODO
+        None
 
 
 def warping(src_fea, src_proj, ref_proj, depth_values):
@@ -54,15 +58,17 @@ def group_wise_correlation(ref_fea, warped_src_fea, G):
     # warped_src_fea: [B,C,D,H,W]
     # out: [B,G,D,H,W]
     # TODO
-
+    None
 
 def depth_regression(p, depth_values):
     # p: probability volume [B, D, H, W]
     # depth_values: discrete depth values [B, D]
     # TODO
+    None
 
 def mvs_loss(depth_est, depth_gt, mask):
     # depth_est: [B,1,H,W]
     # depth_gt: [B,1,H,W]
     # mask: [B,1,H,W]
     # TODO
+    None
