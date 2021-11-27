@@ -73,6 +73,8 @@ class SimlarityRegNet(nn.Module):
         None
 
 
+#src_fea or source_features is the output of the neural network
+# that searched the features (With C channels)
 def warping(src_fea, src_proj, ref_proj, depth_values):
     # src_fea: [B, C, H, W]
     # src_proj: [B, 4, 4]
@@ -91,6 +93,10 @@ def warping(src_fea, src_proj, ref_proj, depth_values):
                                torch.arange(0, W, dtype=torch.float32, device=src_fea.device)])
         y, x = y.contiguous(), x.contiguous()
         y, x = y.view(H * W), x.view(H * W)
+
+        warped_src_fea = rot @ torch.inverse(ref_proj)
+
+        None
         # TODO
 
     # get warped_src_fea with bilinear interpolation (use 'grid_sample' function from pytorch)

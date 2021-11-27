@@ -76,8 +76,10 @@ class MVSDataset(Dataset):
                                          dtype=np.float32)
                 mask = read_img(mask_filename)
                 depth = read_depth(depth_filename)
-
-        imgs = np.stack(imgs).transpose([0, 3, 1, 2])
+        
+        imgs = np.stack(imgs)
+        imgs = imgs.transpose([0, 3, 1, 2])
+        #imgs = np.stack(imgs).transpose([0, 3, 1, 2])
         proj_matrices = np.stack(proj_matrices)
 
         return {"imgs": imgs,

@@ -15,6 +15,9 @@ import sys
 import datetime
 
 
+# doc
+# https://stackoverflow.com/questions/39217717/in-computer-vision-what-does-mvs-do-that-sfm-cant
+
 parser = argparse.ArgumentParser(description='Assignment: Multi-View Stereo')
 parser.add_argument('--mode', default='train', help='train or test', choices=['train', 'val'])
 parser.add_argument('--model', default='net', help='select model')

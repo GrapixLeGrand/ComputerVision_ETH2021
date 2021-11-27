@@ -16,13 +16,15 @@ def read_cam_file(filename):
         
         #iterate over the right parts (skip extrinsics)
         for i in range(0, 4):
-            extrinsics[i] = np.array(lines[i + 1]).astype(float)
+            tmp = [float(lines[i + 1][k]) for k in range(0, 4)]
+            extrinsics[i] = np.array(tmp)
 
         intrinsics = np.zeros((3, 3))
 
         #iterate over the right parts (skip intrisics + beginning)
         for i in range(0, 3):
-            extrinsics[i] = np.array(lines[i + 7]).astype(float)
+            tmp = [float(lines[i + 7][k]) for k in range(0, 3)]
+            intrinsics[i] = np.array(tmp)
 
         depth_min = float(lines[11][0])
         depth_max = float(lines[11][1])
@@ -30,15 +32,19 @@ def read_cam_file(filename):
     return intrinsics, extrinsics, depth_min, depth_max
 
 def read_img(filename):
-    # data is a (width, height, 3) array
+    # data is a (width, height, 3) array (initially 3 uint8)
 
+    #https://stackoverflow.com/questions/31386096/importing-png-files-into-numpy
     img_frame = Image.open(filename)
-    data = np.array(img_frame.getdata())
+    data = np.array(img_frame.getdata(), dtype=np.float32) / 255.0
+    if (img_frame.mode == 'RGB'):
+        data = data.reshape((img_frame.width, img_frame.height, 3))
+    elif(img_frame.mode == 'L'):
+        data = data.reshape((img_frame.width, img_frame.height))
+    else:
+        assert True, "unknown mode !"
 
-    #CORRECT ?
-    normalized = np.array(data, dtype=np.float32) / 255.0
-
-    return normalized #np_img
+    return data
 
 def read_depth(filename):
     # read pfm depth file
