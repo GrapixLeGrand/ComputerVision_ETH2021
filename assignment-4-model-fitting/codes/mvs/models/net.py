@@ -22,6 +22,13 @@ class Net(nn.Module):
 
         # feature extraction
         features = [self.feature(img) for img in imgs]
+        
+        # (Me) We inserted the reference image and both sources feature in the feature net
+        # in order to make a depth hypothesis on all images.
+        # I Think we will then try to extract a transformation that match both source
+        # to the reference hypothesis. 
+        # We are learning what's on the image (FeatureNet) in order to correlate the 
+        # depth sampling from all images ?
         ref_feature, src_features = features[0], features[1:]
 
         # do the warping, compute and integrate matching similarity across source views
@@ -30,6 +37,7 @@ class Net(nn.Module):
 
         for src_fea, src_proj in zip(src_features, src_projs):
             # warpped src feature
+            # (me) do the warping with depth hypothesis of images and 
             warped_src_feature = warping(src_fea, src_proj, ref_proj, depth_values)
             # group-wise correlation
             similarity = group_wise_correlation(ref_feature, warped_src_feature, self.G)
