@@ -85,16 +85,16 @@ class SimlarityRegNet(nn.Module):
 
         # in: C2, out: C3
         self.L4 = nn.Sequential(
-            nn.ConvTranspose2d(32, 16, (3, 3), stride=2, padding=1),
+            nn.ConvTranspose2d(32, 16, (3, 3), stride=2, padding=1, output_padding=1),
         )
 
         # in: C3 + C1, out: C4
         self.L5 = nn.Sequential(
-            nn.ConvTranspose2d(16, 8, (3, 3), stride=2, padding=1),
+            nn.ConvTranspose2d(16, 8, (3, 3), stride=2, padding=1, output_padding=1),
         )
 
         # in: C4 + C0, out: C5
-        self.L5 = nn.Sequential(
+        self.L6 = nn.Sequential(
             nn.Conv2d(8, 1, (3, 3), stride=1, padding=1),
         )
 
@@ -105,10 +105,15 @@ class SimlarityRegNet(nn.Module):
         # TODO  
         
         B, G, D, H, W = x.size()
-        x_reshaped = x.view(B * D, G, H, W)
-
-
-        None
+        S = x.contiguous()
+        S = S.view(B * D, G, H, W) # correct view ? I dont think so.
+        
+        C0 = self.L1(S)
+        C1 = self.L2(C0)
+        C2 = self.L3(C1)
+        C3 = self.L4(C2)
+        C4 = self.L5(C3 + C1)
+        return self.L6(C4 + C0)
 
 
 #src_fea or source_features is the output of the neural network
