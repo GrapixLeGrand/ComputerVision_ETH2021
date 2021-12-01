@@ -113,8 +113,11 @@ class SimlarityRegNet(nn.Module):
         C2 = self.L3(C1)
         C3 = self.L4(C2)
         C4 = self.L5(C3 + C1)
-        return self.L6(C4 + C0)
+        C5 = self.L6(C4 + C0)
 
+        C5 = C5.reshape((B, D, H, W)) # warning
+
+        return C5
 
 #src_fea or source_features is the output of the neural network
 # that searched the features (With C channels and B images)
@@ -213,13 +216,17 @@ def depth_regression(p, depth_values):
     # p: probability volume [B, D, H, W]
     # depth_values: discrete depth values [B, D]
     # TODO
-    None
+    result = torch.einsum("bd,bdhw->bd", depth_values[:, :], p[:, :, :, :])
+    return result
 
 def mvs_loss(depth_est, depth_gt, mask):
     # depth_est: [B,1,H,W]
     # depth_gt: [B,1,H,W]
     # mask: [B,1,H,W]
     # TODO
+
+    loss = torch.nn.L1Loss(size_average=depth_est, reduce=depth_gt, reduction='mean')
+
     None
 
 """

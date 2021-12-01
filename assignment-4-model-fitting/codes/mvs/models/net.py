@@ -58,7 +58,6 @@ class Net(nn.Module):
             #NOTE : changed 
             depth_index = depth_regression(prob_volume, depth_values=torch.arange(D, device=prob_volume.device,dtype=torch.float).unsqueeze(0).repeat(B,1)).long()
             photometric_confidence = torch.gather(prob_volume_sum4, 1, depth_index.unsqueeze(1)).squeeze(1)
-
         return {
             "depth": depth, 
             "photometric_confidence": photometric_confidence
