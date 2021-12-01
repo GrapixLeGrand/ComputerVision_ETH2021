@@ -63,13 +63,51 @@ class FeatureNet(nn.Module):
 class SimlarityRegNet(nn.Module):
     def __init__(self, G):
         super(SimlarityRegNet, self).__init__()
-        None
-        # TODO
 
+        # TODO
+        # in: S, out: C0
+        self.L1 = nn.Sequential(
+            nn.Conv2d(G, 8, (3, 3), stride=1, padding=1),
+            nn.ReLU()
+        )
+
+        # in: C0, out: C1
+        self.L2 = nn.Sequential(
+            nn.Conv2d(8, 16, (3, 3), stride=2, padding=1),
+            nn.ReLU()
+        )
+
+        # in: C1, out: C2
+        self.L3 = nn.Sequential(
+            nn.Conv2d(16, 32, (3, 3), stride=2, padding=1),
+            nn.ReLU()
+        )
+
+        # in: C2, out: C3
+        self.L4 = nn.Sequential(
+            nn.ConvTranspose2d(32, 16, (3, 3), stride=2, padding=1),
+        )
+
+        # in: C3 + C1, out: C4
+        self.L5 = nn.Sequential(
+            nn.ConvTranspose2d(16, 8, (3, 3), stride=2, padding=1),
+        )
+
+        # in: C4 + C0, out: C5
+        self.L5 = nn.Sequential(
+            nn.Conv2d(8, 1, (3, 3), stride=1, padding=1),
+        )
+
+    # https://medium.com/analytics-vidhya/pytorch-contiguous-vs-non-contiguous-tensor-view-understanding-view-reshape-73e10cdfa0dd
     def forward(self, x):
         # x: [B,G,D,H,W]
         # out: [B,D,H,W]
-        # TODO
+        # TODO  
+        
+        B, G, D, H, W = x.size()
+        x_reshaped = x.view(B * D, G, H, W)
+
+
         None
 
 
@@ -82,6 +120,7 @@ def warping(src_fea, src_proj, ref_proj, depth_values):
     # ref_proj: [B, 4, 4]
     # depth_values: [B, D]
     # out: [B, C, D, H, W]
+
     B,C,H,W = src_fea.size()
     D = depth_values.size(1)
     
@@ -96,8 +135,8 @@ def warping(src_fea, src_proj, ref_proj, depth_values):
     xyz = torch.zeros((B, H, W, 2))
     
     xyz.requires_grad = False # Warning
-    warped_src_fea = src_fea.detach().clone()
-
+    warped_src_fea = torch.zeros((B, C, D, H, W)) #src_fea.detach().clone()
+    
     for i in range(D):
         
         xyz[:, :, :, :] = 0.0
@@ -123,18 +162,20 @@ def warping(src_fea, src_proj, ref_proj, depth_values):
             yx1 = torch.reshape(yx1, (H, W, 3))
             yx1_copy = yx1.detach().clone()
             #stacked = torch.cat(B * [yx1.unsqueeze(0)])
-
+            "ij,hwk->hwik"
             for j in range(B):
 
                 current_depth = depth_values[j][i]
                 yx1_copy *= current_depth
-                yx1_copy =  yx1_copy @ rot[j] + trans[j].T # warning rot T, is this this and does T works?
+                test = rot[j]
+                test_t = rot[j].T
+                #yx1_copy = torch.einsum("hwk,ij->hwk", yx1_copy, rot[j]) + trans[j].T
+                yx1_copy = yx1_copy @ rot[j] + trans[j].T # warning rot T, is this this and does T works?
                 yx1_copy[:, :, 0] /= yx1_copy[:, :, -1]
                 yx1_copy[:, :, 1] /= yx1_copy[:, :, -1] # projecting back to the source image plane
                 xyz[j, :, :, :] = yx1_copy[:, :, : -1]
 
-            warped_src_fea = torch.nn.functional.grid_sample(warped_src_fea, xyz)
-            
+            warped_src_fea[:, :, j, :, :] = torch.nn.functional.grid_sample(src_fea, xyz)
 
     # get warped_src_fea with bilinear interpolation (use 'grid_sample' function from pytorch)
     # TODO
@@ -144,11 +185,24 @@ def warping(src_fea, src_proj, ref_proj, depth_values):
     return warped_src_fea
 
 def group_wise_correlation(ref_fea, warped_src_fea, G):
+    
     # ref_fea: [B,C,H,W]
     # warped_src_fea: [B,C,D,H,W]
     # out: [B,G,D,H,W]
     # TODO
-    None
+
+    B, C, D, H, W = warped_src_fea.size()
+    out = torch.zeros((B, G, D, H, W))
+    group_size = C // G
+    factor = 1.0 / (C / G)
+
+    for g in range(G):
+        l = group_size * g
+        u = group_size * (g + 1)
+        # not quite sure lol xD
+        out[:, g, :, :, :] = factor * torch.einsum("bchw,bcdhw->", ref_fea[:, l:u, :, :], warped_src_fea[:, l:u, :, :, :])
+
+    return out
 
 def depth_regression(p, depth_values):
     # p: probability volume [B, D, H, W]

@@ -12,7 +12,7 @@ class Net(nn.Module):
         self.feature = FeatureNet()
         self.similarity_regularization = SimlarityRegNet(self.G)
 
-
+    #https://www.programcreek.com/python/example/104458/torch.nn.functional.grid_sample
     def forward(self, imgs, proj_matrices, depth_values):
         imgs = torch.unbind(imgs, 1)
         proj_matrices = torch.unbind(proj_matrices, 1)
