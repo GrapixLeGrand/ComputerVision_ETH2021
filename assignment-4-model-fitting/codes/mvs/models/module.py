@@ -177,8 +177,9 @@ def warping(src_fea, src_proj, ref_proj, depth_values):
                 yx1_copy *= current_depth
                 test = rot[j]
                 test_t = rot[j].T
+
                 #yx1_copy = torch.einsum("hwk,ij->hwk", yx1_copy, rot[j]) + trans[j].T
-                yx1_copy = yx1_copy @ rot[j] + trans[j].T # warning rot T, is this this and does T works?
+                yx1_copy = yx1_copy @ rot[j].T + trans[j].T # warning rot T, is this this and does T works?
                 yx1_copy[:, :, 0] /= yx1_copy[:, :, -1]
                 yx1_copy[:, :, 1] /= yx1_copy[:, :, -1] # projecting back to the source image plane
                 xyz[j, :, :, :] = yx1_copy[:, :, : -1]
@@ -216,7 +217,7 @@ def depth_regression(p, depth_values):
     # p: probability volume [B, D, H, W]
     # depth_values: discrete depth values [B, D]
     # TODO
-    result = torch.einsum("bd,bdhw->bd", depth_values[:, :], p[:, :, :, :])
+    result = torch.einsum("bd,bdhw->bhw", depth_values[:, :], p[:, :, :, :])
     return result
 
 def mvs_loss(depth_est, depth_gt, mask):
@@ -225,9 +226,20 @@ def mvs_loss(depth_est, depth_gt, mask):
     # mask: [B,1,H,W]
     # TODO
 
-    loss = torch.nn.L1Loss(size_average=depth_est, reduce=depth_gt, reduction='mean')
+    
+    
+    #mask_u = mask.unsqueeze(1)
+    #depth_gt_t = depth_gt_t.unsqueeze(1)
+    #depth_est_u = depth_est.unsqueeze(1)
 
-    None
+    #mask_u = mask_u > 0 #convert to boolean in order to avoid indice extraction
+    mask = mask > 0
+    est_masked = depth_est[mask] #.view((B, H, W)) #depth_est_u[mask_u]
+    gt_masked = depth_gt[mask] #.view((B, H, W)) #depth_gt_t[mask_u]
+
+    loss = torch.nn.L1Loss()(est_masked, gt_masked)
+
+    return loss
 
 """
 #yx1_piled = torch.cat(2 * [yx1.unsqueeze(0)]) # unsqueeze one slice and pile them D times (one for each depth sample) #yx1.unsqueeze(0).repeat()

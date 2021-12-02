@@ -100,6 +100,7 @@ TestImgLoader = DataLoader(test_dataset, args.batch_size, shuffle=False, num_wor
 
 # model, optimizer
 model = Net()
+model.cuda()
 model_loss = mvs_loss
 optimizer = optim.Adam(model.parameters(), lr=args.lr, betas=(0.9, 0.999), weight_decay=args.wd)
 
@@ -198,6 +199,10 @@ def train_sample(sample, detailed_summary=False):
     optimizer.zero_grad()
 
     depth_gt = sample["depth"]
+
+    B, H, W = depth_gt.size()
+    depth_gt = depth_gt.transpose(1, 2).view((B, W, H))
+
     mask = sample["mask"]
 
     outputs = model(sample["imgs"], sample["proj_matrices"], sample["depth_values"])
