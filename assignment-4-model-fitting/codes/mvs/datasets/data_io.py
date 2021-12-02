@@ -35,6 +35,7 @@ def read_img(filename):
     # data is a (width, height, 3) array (initially 3 uint8)
 
     #https://stackoverflow.com/questions/31386096/importing-png-files-into-numpy
+    """
     img_frame = Image.open(filename)
     data = np.array(img_frame.getdata(), dtype=np.float32) / 255.0
     if (img_frame.mode == 'RGB'):
@@ -43,8 +44,8 @@ def read_img(filename):
         data = data.reshape((img_frame.width, img_frame.height))
     else:
         assert True, "unknown mode !"
-
-    return data
+    """
+    return np.asarray(Image.open(filename), dtype=np.float32) / 255.0
 
 def read_depth(filename):
     # read pfm depth file

@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class FeatureNet(nn.Module):
     def __init__(self):
@@ -57,6 +58,7 @@ class FeatureNet(nn.Module):
     def forward(self, x):
         # x: [B,3,H,W] # B, CHAnnels, Height, Width
         # TODO
+        x = x.to(device)
         return self.layers(x)
 
 
@@ -104,6 +106,8 @@ class SimlarityRegNet(nn.Module):
         # out: [B,D,H,W]
         # TODO  
         
+        x = x.to(device)
+        
         B, G, D, H, W = x.size()
         S = x.contiguous()
         S = S.view(B * D, G, H, W) # correct view ? I dont think so.
@@ -129,6 +133,11 @@ def warping(src_fea, src_proj, ref_proj, depth_values):
     # depth_values: [B, D]
     # out: [B, C, D, H, W]
 
+    src_fea = src_fea.to(device)
+    src_proj = src_proj.to(device)
+    ref_proj = ref_proj.to(device)
+    depth_values = depth_values.to(device)
+
     B,C,H,W = src_fea.size()
     D = depth_values.size(1)
     
@@ -140,10 +149,10 @@ def warping(src_fea, src_proj, ref_proj, depth_values):
     # What we want is to rely these depth values for some pixels in the
     # reference frame to our sources frames.
 
-    xyz = torch.zeros((B, H, W, 2))
+    xyz = torch.zeros((B, H, W, 2)).to(device)
     
     xyz.requires_grad = False # Warning
-    warped_src_fea = torch.zeros((B, C, D, H, W)) #src_fea.detach().clone()
+    warped_src_fea = torch.zeros((B, C, D, H, W)).to(device) #src_fea.detach().clone()
     
     for i in range(D):
         
@@ -162,15 +171,15 @@ def warping(src_fea, src_proj, ref_proj, depth_values):
             y, x = y.contiguous(), x.contiguous()
             # View in 1D => flatten the 2D arrays
             y, x = y.view(H * W), x.view(H * W) # I guess these are the x, y coordinates of pixels
-            
+            y, x = y.to(device), x.to(device)
             # TODO
 
-            ones = torch.ones(y.shape)
-            yx1 = torch.stack((y, x, ones), dim=1) #stack xyz as vector => axis = 1
-            yx1 = torch.reshape(yx1, (H, W, 3))
-            yx1_copy = yx1.detach().clone()
+            ones = torch.ones(y.shape).to(device)
+            yx1 = torch.stack((y, x, ones), dim=1).to(device) #stack xyz as vector => axis = 1
+            yx1 = torch.reshape(yx1, (H, W, 3)).to(device)
+            yx1_copy = yx1.detach().clone().to(device)
             #stacked = torch.cat(B * [yx1.unsqueeze(0)])
-            "ij,hwk->hwik"
+           
             for j in range(B):
 
                 current_depth = depth_values[j][i]
@@ -198,7 +207,10 @@ def group_wise_correlation(ref_fea, warped_src_fea, G):
     # ref_fea: [B,C,H,W]
     # warped_src_fea: [B,C,D,H,W]
     # out: [B,G,D,H,W]
-    # TODO
+    # TODO 
+
+    ref_fea = ref_fea.to(device)
+    warped_src_fea = warped_src_fea.to(device) 
 
     B, C, D, H, W = warped_src_fea.size()
     out = torch.zeros((B, G, D, H, W))
@@ -217,6 +229,7 @@ def depth_regression(p, depth_values):
     # p: probability volume [B, D, H, W]
     # depth_values: discrete depth values [B, D]
     # TODO
+    p = p.to(device)
     result = torch.einsum("bd,bdhw->bhw", depth_values[:, :], p[:, :, :, :])
     return result
 

@@ -3,22 +3,39 @@ import torch.nn as nn
 import torch.nn.functional as F
 from .module import *
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+if torch.cuda.is_available():
+    torch.cuda.empty_cache() 
 
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
         # number of groups for group-wise correlation
         self.G = 8
-        self.feature = FeatureNet()
-        self.similarity_regularization = SimlarityRegNet(self.G)
+        self.feature = FeatureNet()#.to(device)
+        self.similarity_regularization = SimlarityRegNet(self.G)#.to(device)
+
+        #if (torch.cuda.is_available()):
+        #    self.feature.to("cuda")
+        #    self.similarity_regularization.to("cuda")
 
     #https://www.programcreek.com/python/example/104458/torch.nn.functional.grid_sample
     def forward(self, imgs, proj_matrices, depth_values):
+        #if (torch.cuda.is_available()):
+        #    imgs.to("cuda")
+        #imgs = imgs.to(device)
+        #proj_matrices = proj_matrices.to(device)
+        #depth_values = depth_values.to(device)
+
         imgs = torch.unbind(imgs, 1)
         proj_matrices = torch.unbind(proj_matrices, 1)
         ref_proj, src_projs = proj_matrices[0], proj_matrices[1:]
         D = depth_values.size(1)
         V = len(imgs)
+
+        #for img in imgs:
+            #img = img.to(device)
 
         # feature extraction
         features = [self.feature(img) for img in imgs]
@@ -40,8 +57,8 @@ class Net(nn.Module):
             # (me) do the warping with depth hypothesis of images and 
             warped_src_feature = warping(src_fea, src_proj, ref_proj, depth_values)
             # group-wise correlation
-            similarity = group_wise_correlation(ref_feature, warped_src_feature, self.G)
-            similarity_sum = similarity_sum + similarity
+            similarity = group_wise_correlation(ref_feature, warped_src_feature, self.G)#.to(device)
+            similarity_sum = similarity_sum + similarity.to(device)
 
         # aggregate matching similarity from all the source views by averaging
         similarity_sum = similarity_sum.div_(V)

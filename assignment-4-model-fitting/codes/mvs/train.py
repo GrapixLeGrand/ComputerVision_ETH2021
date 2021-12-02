@@ -15,6 +15,9 @@ import sys
 import datetime
 
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print('using device ', device)
+
 # doc
 # https://stackoverflow.com/questions/39217717/in-computer-vision-what-does-mvs-do-that-sfm-cant
 
@@ -33,7 +36,7 @@ parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
 parser.add_argument('--lrepochs', type=str, default="4,8:2", help='epoch ids to downscale lr and the downscale rate')
 parser.add_argument('--wd', type=float, default=0.0, help='weight decay')
 
-parser.add_argument('--batch_size', type=int, default=2, help='train batch size')
+parser.add_argument('--batch_size', type=int, default=1, help='train batch size')
 parser.add_argument('--numdepth', type=int, default=192, help='the number of depth values')
 
 parser.add_argument('--loadckpt', default=None, help='load a specific checkpoint')
@@ -98,11 +101,16 @@ test_dataset = MVSDataset(args.testpath, args.testlist, "val", 3, args.numdepth)
 TrainImgLoader = DataLoader(train_dataset, args.batch_size, shuffle=True, num_workers=0, drop_last=True)
 TestImgLoader = DataLoader(test_dataset, args.batch_size, shuffle=False, num_workers=4, drop_last=False)
 
+
 # model, optimizer
 model = Net()
-model.cuda()
+model.to(device)
 model_loss = mvs_loss
 optimizer = optim.Adam(model.parameters(), lr=args.lr, betas=(0.9, 0.999), weight_decay=args.wd)
+
+
+    #torch.nn.DataParallel(model).cuda()
+    #.cuda() model.to("cuda")
 
 # load parameters
 start_epoch = 0
@@ -198,15 +206,32 @@ def train_sample(sample, detailed_summary=False):
     model.train()
     optimizer.zero_grad()
 
-    depth_gt = sample["depth"]
+    depth_gt = sample["depth"].to(device)
+    #B, W, H = depth_gt.size()
+    #depth_gt = depth_gt.transpose((2, 1)).view((B, W, H)).to(device)
+    #depth_gt = depth_gt.to(device)
 
-    B, H, W = depth_gt.size()
-    depth_gt = depth_gt.transpose(1, 2).view((B, W, H))
+    #B, H, W = depth_gt.size()
+    #depth_gt = depth_gt.transpose(1, 2).view((B, W, H)).to(device)
 
-    mask = sample["mask"]
+    #depth_gt = depth_gt.to(device)
 
-    outputs = model(sample["imgs"], sample["proj_matrices"], sample["depth_values"])
+    mask = sample["mask"].to(device)
+    #mask = mask.to(device)
+
+    #if (torch.cuda.is_available()):
+    #    mask.to("cuda")
+    #    sample["imgs"].to("cuda")
+    #    sample["proj_matrices"].to("cuda")
+    #    sample["depth_values"].to("cuda")
+
+    outputs = model(sample["imgs"].to(device), sample["proj_matrices"].to(device), sample["depth_values"].to(device))
+    
+    #if (torch.cuda.is_available()):
+    #    outputs["depth"].to("cuda")
+
     depth_est = outputs["depth"]
+    #depth_est.to(device)
 
     loss = model_loss(depth_est, depth_gt, mask)
     loss.backward()
@@ -230,11 +255,14 @@ def train_sample(sample, detailed_summary=False):
 def test_sample(sample, detailed_summary=True):
     model.eval()
 
-    depth_gt = sample["depth"]
-    mask = sample["mask"]
+    depth_gt = sample["depth"].to(device)
+    #depth_gt = depth_gt.to(device)
+    mask = sample["mask"].to(device)
+    #mask = mask.to(device)
 
-    outputs = model(sample["imgs"], sample["proj_matrices"], sample["depth_values"])
+    outputs = model(sample["imgs"].to(device), sample["proj_matrices"].to(device), sample["depth_values"].to(device))
     depth_est = outputs["depth"]
+    #depth_est = depth_est.to(device)
 
     loss = model_loss(depth_est, depth_gt, mask)
 
