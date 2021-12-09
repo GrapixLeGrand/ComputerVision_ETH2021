@@ -122,6 +122,9 @@ def reproject_with_depth(depth_ref, intrinsics_ref, extrinsics_ref, depth_src, i
     xyz_src = np.matmul(np.matmul(extrinsics_src, np.linalg.inv(extrinsics_ref)),
                         np.vstack((xyz_ref, np.ones_like(x_ref))))[:3]
 
+    #they take pixels in ref at estimated detph of ref and project
+    # it to the ref plane , the also take pixels in source and back
+
     K_xyz_src = np.matmul(intrinsics_src, xyz_src)
     xy_src = K_xyz_src[:2] / K_xyz_src[2:3]
 
