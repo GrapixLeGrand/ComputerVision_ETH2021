@@ -66,8 +66,6 @@ def grid_points(img, nPointsX, nPointsY, border):
 
 def descriptors_hog(img, vPoints, cellWidth, cellHeight):
     nBins = 8
-    w = cellWidth
-    h = cellHeight
 
     # cv2.CV_16S
     grad_x = cv2.Sobel(img, cv2.CV_32F, dx=1, dy=0, ksize=1)
@@ -182,11 +180,19 @@ def bow_histogram(vFeatures, vCenters):
 
     # TODO
     M, D = vFeatures.shape
-    N, _ = vCenters.shape
+    N, _ = vCenters.shape # 10 clusters each 128-D
 
     squared_distances = vFeatures @ vCenters.T
     min_dists = np.argmin(squared_distances, axis=1)
-    _, histo = np.unique(min_dists, return_counts=1)
+
+    histo = np.zeros(N)
+
+    elements, counts = np.unique(min_dists, return_counts=1)
+
+    for i in range(0, len(elements)):
+        e = elements[i]
+        count = counts[i]
+        histo[e] += count
 
     return histo
 
@@ -218,6 +224,10 @@ def create_bow_histograms(nameDir, vCenters):
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # [h, w]
 
         # TODO
+
+        vPoints = grid_points(img, nPointsX, nPointsY, border)
+        vFeatures = descriptors_hog(img, vPoints, cellWidth, cellHeight)
+        
         vBoW.append(bow_histogram(vFeatures, vCenters))
 
 
@@ -258,7 +268,7 @@ if __name__ == '__main__':
 
 
     k = 10 #None  # todo
-    numiter = 10 #None  # todo
+    numiter = 100 #None  # todo
 
     print('creating codebook ...')
     vCenters = create_codebook(nameDirPos_train, nameDirNeg_train, k, numiter)
