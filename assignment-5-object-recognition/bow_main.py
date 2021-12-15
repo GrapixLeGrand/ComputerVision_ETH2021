@@ -71,11 +71,7 @@ def descriptors_hog(img, vPoints, cellWidth, cellHeight):
     grad_x = cv2.Sobel(img, cv2.CV_32F, dx=1, dy=0, ksize=1)
     grad_y = cv2.Sobel(img, cv2.CV_32F, dx=0, dy=1, ksize=1)
 
-    # https://stackoverflow.com/questions/38961957/cv2-phase-gives-the-angle-in-radian
-    # https://learnopencv.com/histogram-of-oriented-gradients/
-
-    # we say that we compute the rotation in [0, 360] degrees
-    grad_magnitudes, angles = cv2.cartToPolar(grad_x, grad_y, angleInDegrees=True)
+    angles = (np.arctan2(grad_x, grad_y) * 180 / np.pi) + 180
 
     descriptors = np.zeros((len(vPoints), 128)) #[]  # list of descriptors for the current image, each entry is one 128-d vector for a grid point
     for i in range(len(vPoints)):
@@ -87,7 +83,6 @@ def descriptors_hog(img, vPoints, cellWidth, cellHeight):
         start_W, end_W = x - (2 * cellWidth - 1), x + 2 * cellWidth + 1
         start_H, end_H = y - (2 * cellHeight - 1), y + 2 * cellHeight + 1
 
-        gp_grad_mags = grad_magnitudes[start_H:end_H, start_W:end_W]
         gp_grad_angles = angles[start_H:end_H, start_W:end_W]
         
         current_descriptor = np.zeros(128)
@@ -102,7 +97,6 @@ def descriptors_hog(img, vPoints, cellWidth, cellHeight):
                 start_cell_H = cellHeight * yy
                 end_cell_H = cellHeight * (yy + 1)
 
-                cell_grad_mags = gp_grad_mags[start_cell_W:end_cell_W, start_cell_H:end_cell_H]
                 cell_grad_angles = gp_grad_angles[start_cell_W:end_cell_W, start_cell_H:end_cell_H]
                 
                 current_cell_descriptor = np.zeros(8)
@@ -111,11 +105,10 @@ def descriptors_hog(img, vPoints, cellWidth, cellHeight):
                 for x_cell in range(0, cellWidth):
                     for y_cell in range(0, cellHeight):
                         
-                        grad_mag = cell_grad_mags[x_cell][y_cell]
                         grad_angle = cell_grad_angles[x_cell][y_cell]
 
                         bin = int((grad_angle / 360.0) * (nBins - 1))
-                        current_cell_descriptor[bin] += grad_mag
+                        current_cell_descriptor[bin] += 1
 
                 start_index = xx * 8 + yy * 32
                 end_index = (xx + 1) * 8 + yy * 32
@@ -123,7 +116,6 @@ def descriptors_hog(img, vPoints, cellWidth, cellHeight):
 
         descriptors[i] = current_descriptor
 
-    #descriptors = np.asarray(descriptors) # [nPointsX*nPointsY, 128], descriptor for the current image (100 grid points)
     return descriptors
 
 
@@ -197,9 +189,6 @@ def bow_histogram(vFeatures, vCenters):
     return histo
 
 
-
-
-
 def create_bow_histograms(nameDir, vCenters):
     """
     :param nameDir: dir of input images
@@ -248,16 +237,20 @@ def bow_recognition_nearest(histogram,vBoWPos,vBoWNeg):
 
     # Find the nearest neighbor in the positive and negative sets and decide based on this neighbor
     # todo
-    ...
+    dist_to_all_pos = np.diag((histogram - vBoWPos).dot((histogram - vBoWPos).T))
+    dist_to_all_neg = np.diag((histogram - vBoWNeg).dot((histogram - vBoWNeg).T))
+
+    min_index_pos = np.argmin(dist_to_all_pos)
+    min_index_neg = np.argmin(dist_to_all_neg)
+    
+    DistPos = dist_to_all_pos[min_index_pos]
+    DistNeg = dist_to_all_neg[min_index_neg]
 
     if (DistPos < DistNeg):
         sLabel = 1
     else:
         sLabel = 0
     return sLabel
-
-
-
 
 
 if __name__ == '__main__':
@@ -267,8 +260,8 @@ if __name__ == '__main__':
     nameDirNeg_test = 'data/data_bow/cars-testing-neg'
 
 
-    k = 10 #None  # todo
-    numiter = 100 #None  # todo
+    k = 16 #None  # todo
+    numiter = 20 #None  # todo
 
     print('creating codebook ...')
     vCenters = create_codebook(nameDirPos_train, nameDirNeg_train, k, numiter)
