@@ -1,0 +1,939 @@
+[INFO] test set loaded, 10000 samples in total.
+79it [00:02, 28.54it/s]
+test accuracy: 81.43
+
+
+RUNDIR: runs/12699
+[*] PARAM path: runs/12699/params.json
+[INFO] train set loaded, 45000 samples in total.
+[INFO] val set loaded, 5000 samples in total.
+98it [00:04, 21.31it/s][Step 99/ Epoch 0]  Loss: 2.0304  
+40it [00:00, 53.99it/s]
+acc: 30.680, 56.42it/s]
+[*] best model saved
+
+197it [00:10, 21.24it/s][Step 199/ Epoch 0]  Loss: 1.8623  
+40it [00:00, 53.08it/s]
+acc: 35.580, 56.00it/s]
+[*] best model saved
+
+299it [00:16, 21.13it/s][Step 299/ Epoch 0]  Loss: 1.8384  
+40it [00:00, 53.56it/s]
+acc: 39.940, 55.95it/s]
+[*] best model saved
+
+352it [00:19, 18.13it/s]
+45it [00:02, 21.00it/s][Step 47/ Epoch 1]  Loss: 1.6795  
+40it [00:00, 53.76it/s]
+acc: 42.340, 55.59it/s]
+[*] best model saved
+
+147it [00:07, 21.05it/s][Step 147/ Epoch 1]  Loss: 1.5895  
+40it [00:00, 53.98it/s]
+acc: 43.960, 55.97it/s]
+[*] best model saved
+
+246it [00:13, 21.06it/s][Step 247/ Epoch 1]  Loss: 1.5125  
+40it [00:00, 53.79it/s]
+acc: 46.800, 55.99it/s]
+[*] best model saved
+
+345it [00:18, 21.00it/s][Step 347/ Epoch 1]  Loss: 1.4249  
+40it [00:00, 53.87it/s]
+acc: 48.380, 55.84it/s]
+[*] best model saved
+
+352it [00:20, 17.43it/s]
+95it [00:04, 21.06it/s][Step 95/ Epoch 2]  Loss: 1.4937  
+40it [00:00, 53.91it/s]
+acc: 50.620, 55.92it/s]
+[*] best model saved
+
+194it [00:10, 21.05it/s][Step 195/ Epoch 2]  Loss: 1.3455  
+40it [00:00, 53.74it/s]
+acc: 50.920, 55.85it/s]
+[*] best model saved
+
+293it [00:15, 21.08it/s][Step 295/ Epoch 2]  Loss: 1.5200  
+40it [00:00, 53.64it/s]
+acc: 52.320, 55.76it/s]
+[*] best model saved
+
+352it [00:19, 18.15it/s]
+42it [00:02, 21.02it/s][Step 43/ Epoch 3]  Loss: 1.2545  
+40it [00:00, 52.74it/s]
+acc: 52.420, 55.23it/s]
+[*] best model saved
+
+141it [00:07, 21.07it/s][Step 143/ Epoch 3]  Loss: 1.3034  
+40it [00:00, 52.05it/s]
+acc: 53.400, 55.77it/s]
+[*] best model saved
+
+243it [00:13, 20.86it/s][Step 243/ Epoch 3]  Loss: 1.3436  
+40it [00:00, 52.78it/s]
+acc: 54.280, 55.53it/s]
+[*] best model saved
+
+342it [00:18, 20.88it/s][Step 343/ Epoch 3]  Loss: 1.2095  
+40it [00:00, 53.21it/s]
+acc: 55.560, 55.56it/s]
+[*] best model saved
+
+352it [00:20, 17.34it/s]
+89it [00:04, 20.92it/s][Step 91/ Epoch 4]  Loss: 1.2772  
+40it [00:00, 52.96it/s]
+acc: 57.660, 55.10it/s]
+[*] best model saved
+
+191it [00:10, 20.87it/s][Step 191/ Epoch 4]  Loss: 1.2208  
+40it [00:00, 53.62it/s]
+acc: 56.980, 55.65it/s]
+[*] best model saved
+
+290it [00:15, 20.90it/s][Step 291/ Epoch 4]  Loss: 1.1815  
+40it [00:00, 53.56it/s]
+acc: 57.140, 55.57it/s]
+[*] best model saved
+
+352it [00:19, 18.08it/s]
+39it [00:01, 20.95it/s][Step 39/ Epoch 5]  Loss: 1.3639  
+40it [00:00, 53.41it/s]
+acc: 59.220, 55.50it/s]
+[*] best model saved
+
+138it [00:07, 20.88it/s][Step 139/ Epoch 5]  Loss: 1.0824  
+40it [00:00, 52.48it/s]
+acc: 59.540, 55.56it/s]
+[*] best model saved
+
+237it [00:13, 20.86it/s][Step 239/ Epoch 5]  Loss: 1.0769  
+40it [00:00, 53.51it/s]
+acc: 60.160, 55.45it/s]
+[*] best model saved
+
+339it [00:18, 20.96it/s][Step 339/ Epoch 5]  Loss: 1.1339  
+40it [00:00, 53.69it/s]
+acc: 60.660, 55.43it/s]
+[*] best model saved
+
+352it [00:20, 17.24it/s]
+86it [00:04, 20.91it/s][Step 87/ Epoch 6]  Loss: 1.0964  
+40it [00:00, 52.72it/s]
+acc: 60.320, 54.78it/s]
+[*] best model saved
+
+185it [00:09, 20.93it/s][Step 187/ Epoch 6]  Loss: 1.1865  
+40it [00:00, 53.68it/s]
+acc: 63.400, 55.44it/s]
+[*] best model saved
+
+287it [00:15, 20.90it/s][Step 287/ Epoch 6]  Loss: 1.1449  
+40it [00:00, 53.41it/s]
+acc: 63.840, 55.59it/s]
+[*] best model saved
+
+352it [00:19, 18.02it/s]
+33it [00:01, 20.87it/s][Step 35/ Epoch 7]  Loss: 0.9627  
+40it [00:00, 52.69it/s]
+acc: 62.880, 55.41it/s]
+[*] best model saved
+
+135it [00:07, 20.81it/s][Step 135/ Epoch 7]  Loss: 1.0837  
+40it [00:00, 53.06it/s]
+acc: 64.520, 55.17it/s]
+[*] best model saved
+
+234it [00:13, 20.88it/s][Step 235/ Epoch 7]  Loss: 0.7836  
+40it [00:00, 53.18it/s]
+acc: 63.800, 55.17it/s]
+[*] best model saved
+
+333it [00:18, 20.91it/s][Step 335/ Epoch 7]  Loss: 1.2328  
+40it [00:00, 53.39it/s]
+acc: 63.640, 55.34it/s]
+[*] best model saved
+
+352it [00:20, 17.18it/s]
+81it [00:03, 20.80it/s][Step 83/ Epoch 8]  Loss: 1.0598  
+40it [00:00, 48.44it/s]
+acc: 65.660, 52.66it/s]
+[*] best model saved
+
+183it [00:09, 20.88it/s][Step 183/ Epoch 8]  Loss: 1.0649  
+40it [00:00, 48.51it/s]
+acc: 66.260, 51.20it/s]
+[*] best model saved
+
+282it [00:15, 20.84it/s][Step 283/ Epoch 8]  Loss: 0.9726  
+40it [00:00, 49.07it/s]
+acc: 65.040, 52.51it/s]
+[*] best model saved
+
+352it [00:19, 17.75it/s]
+29it [00:01, 20.86it/s][Step 31/ Epoch 9]  Loss: 0.9839  
+40it [00:00, 51.13it/s]
+acc: 66.620, 55.35it/s]
+[*] best model saved
+
+131it [00:07, 20.88it/s][Step 131/ Epoch 9]  Loss: 1.0495  
+40it [00:00, 53.65it/s]
+acc: 66.560, 55.54it/s]
+[*] best model saved
+
+230it [00:12, 20.89it/s][Step 231/ Epoch 9]  Loss: 1.1346  
+40it [00:00, 52.60it/s]
+acc: 68.080, 54.74it/s]
+[*] best model saved
+
+330it [00:18, 20.82it/s][Step 331/ Epoch 9]  Loss: 1.0914  
+40it [00:00, 52.59it/s]
+acc: 68.080, 55.26it/s]
+[*] best model saved
+
+352it [00:20, 17.21it/s]
+77it [00:03, 20.89it/s][Step 79/ Epoch 10]  Loss: 0.7784  
+40it [00:00, 52.03it/s]
+acc: 68.460, 55.05it/s]
+[*] best model saved
+
+179it [00:09, 20.82it/s][Step 179/ Epoch 10]  Loss: 0.9953  
+40it [00:00, 52.93it/s]
+acc: 68.320, 55.11it/s]
+[*] best model saved
+
+278it [00:15, 20.89it/s][Step 279/ Epoch 10]  Loss: 0.9934  
+40it [00:00, 52.73it/s]
+acc: 68.780, 54.84it/s]
+[*] best model saved
+
+352it [00:19, 17.87it/s]
+26it [00:01, 20.79it/s][Step 27/ Epoch 11]  Loss: 0.9729  
+40it [00:00, 51.47it/s]
+acc: 69.740, 53.97it/s]
+[*] best model saved
+
+127it [00:07, 20.88it/s][Step 127/ Epoch 11]  Loss: 0.8753  
+40it [00:00, 52.83it/s]
+acc: 69.160, 55.05it/s]
+[*] best model saved
+
+227it [00:12, 17.17it/s][Step 227/ Epoch 11]  Loss: 1.0361  
+40it [00:01, 38.00it/s]
+acc: 70.720, 49.75it/s]
+[*] best model saved
+
+325it [00:18, 20.84it/s][Step 327/ Epoch 11]  Loss: 0.8542  
+40it [00:00, 50.93it/s]
+acc: 68.420, 54.28it/s]
+[*] best model saved
+
+352it [00:21, 16.75it/s]
+74it [00:03, 20.51it/s][Step 75/ Epoch 12]  Loss: 0.8118  
+40it [00:00, 52.18it/s]
+acc: 71.380, 54.61it/s]
+[*] best model saved
+
+173it [00:09, 20.59it/s][Step 175/ Epoch 12]  Loss: 0.8539  
+40it [00:01, 29.41it/s]
+acc: 70.981, 28.26it/s]
+[*] best model saved
+
+273it [00:16, 20.71it/s][Step 275/ Epoch 12]  Loss: 0.8739  
+40it [00:00, 51.48it/s]
+acc: 71.100, 54.46it/s]
+[*] best model saved
+
+352it [00:20, 16.80it/s]
+23it [00:01, 20.67it/s][Step 23/ Epoch 13]  Loss: 0.8549  
+40it [00:00, 50.88it/s]
+acc: 71.720, 54.45it/s]
+[*] best model saved
+
+122it [00:06, 20.75it/s][Step 123/ Epoch 13]  Loss: 0.7196  
+40it [00:00, 51.52it/s]
+acc: 71.400, 53.99it/s]
+[*] best model saved
+
+223it [00:13, 14.54it/s][Step 223/ Epoch 13]  Loss: 0.8841  
+40it [00:02, 19.97it/s]
+acc: 72.921, 21.70it/s]
+[*] best model saved
+
+321it [00:20, 20.56it/s][Step 323/ Epoch 13]  Loss: 0.6868  
+40it [00:00, 50.00it/s]
+acc: 72.680, 54.13it/s]
+[*] best model saved
+
+352it [00:22, 15.54it/s]
+71it [00:03, 20.69it/s][Step 71/ Epoch 14]  Loss: 0.8179  
+40it [00:00, 51.25it/s]
+acc: 72.940, 54.47it/s]
+[*] best model saved
+
+170it [00:10, 13.72it/s][Step 171/ Epoch 14]  Loss: 0.8606  
+40it [00:01, 30.96it/s]
+acc: 72.041, 35.97it/s]
+[*] best model saved
+
+271it [00:19, 13.87it/s][Step 271/ Epoch 14]  Loss: 0.7992  
+40it [00:01, 37.49it/s]
+acc: 72.640, 38.25it/s]
+[*] best model saved
+
+352it [00:26, 13.29it/s]
+18it [00:01, 14.05it/s][Step 19/ Epoch 15]  Loss: 0.8567  
+40it [00:01, 37.29it/s]
+acc: 73.360, 38.29it/s]
+[*] best model saved
+
+119it [00:09, 13.97it/s][Step 119/ Epoch 15]  Loss: 0.6753  
+40it [00:01, 37.65it/s]
+acc: 73.940, 38.14it/s]
+[*] best model saved
+
+219it [00:18, 14.05it/s][Step 219/ Epoch 15]  Loss: 0.7175  
+40it [00:01, 37.39it/s]
+acc: 73.480, 38.45it/s]
+[*] best model saved
+
+319it [00:26, 13.99it/s][Step 319/ Epoch 15]  Loss: 0.6635  
+40it [00:01, 37.41it/s]
+acc: 73.360, 38.64it/s]
+[*] best model saved
+
+352it [00:29, 11.77it/s]
+66it [00:04, 14.07it/s][Step 67/ Epoch 16]  Loss: 0.9164  
+40it [00:01, 37.58it/s]
+acc: 74.640, 38.41it/s]
+[*] best model saved
+
+167it [00:13, 14.07it/s][Step 167/ Epoch 16]  Loss: 0.9158  
+40it [00:01, 37.85it/s]
+acc: 74.660, 38.91it/s]
+[*] best model saved
+
+267it [00:21, 14.00it/s][Step 267/ Epoch 16]  Loss: 0.6680  
+40it [00:01, 37.78it/s]
+acc: 75.060, 38.53it/s]
+[*] best model saved
+
+352it [00:28, 12.36it/s]
+15it [00:01, 14.25it/s][Step 15/ Epoch 17]  Loss: 0.8127  
+40it [00:01, 37.56it/s]
+acc: 75.880, 38.60it/s]
+[*] best model saved
+
+115it [00:09, 14.17it/s][Step 115/ Epoch 17]  Loss: 0.9016  
+40it [00:01, 37.65it/s]
+acc: 75.520, 38.85it/s]
+[*] best model saved
+
+215it [00:17, 14.08it/s][Step 215/ Epoch 17]  Loss: 0.6960  
+40it [00:01, 37.71it/s]
+acc: 74.760, 38.80it/s]
+[*] best model saved
+
+315it [00:25, 14.08it/s][Step 315/ Epoch 17]  Loss: 0.5653  
+40it [00:01, 37.57it/s]
+acc: 74.160, 38.57it/s]
+[*] best model saved
+
+352it [00:29, 11.88it/s]
+62it [00:04, 14.07it/s][Step 63/ Epoch 18]  Loss: 0.7778  
+40it [00:01, 37.96it/s]
+acc: 75.640, 38.77it/s]
+[*] best model saved
+
+163it [00:12, 14.06it/s][Step 163/ Epoch 18]  Loss: 0.7791  
+40it [00:01, 37.62it/s]
+acc: 75.320, 38.73it/s]
+[*] best model saved
+
+263it [00:20, 14.13it/s][Step 263/ Epoch 18]  Loss: 0.7816  
+40it [00:01, 37.54it/s]
+acc: 75.580, 38.52it/s]
+[*] best model saved
+
+352it [00:28, 12.38it/s]
+10it [00:00, 14.35it/s][Step 11/ Epoch 19]  Loss: 0.6472  
+40it [00:01, 37.63it/s]
+acc: 74.100, 38.63it/s]
+[*] best model saved
+
+111it [00:08, 14.12it/s][Step 111/ Epoch 19]  Loss: 0.7930  
+40it [00:01, 37.64it/s]
+acc: 76.220, 38.48it/s]
+[*] best model saved
+
+211it [00:17, 14.07it/s][Step 211/ Epoch 19]  Loss: 0.7766  
+40it [00:01, 37.81it/s]
+acc: 76.920, 38.71it/s]
+[*] best model saved
+
+311it [00:25, 14.15it/s][Step 311/ Epoch 19]  Loss: 0.6845  
+40it [00:01, 37.65it/s]
+acc: 76.120, 38.80it/s]
+[*] best model saved
+
+352it [00:29, 11.92it/s]
+58it [00:04, 14.12it/s][Step 59/ Epoch 20]  Loss: 0.6683  
+40it [00:01, 37.91it/s]
+acc: 76.520, 38.89it/s]
+[*] best model saved
+
+159it [00:12, 14.18it/s][Step 159/ Epoch 20]  Loss: 0.5705  
+40it [00:01, 37.82it/s]
+acc: 76.740, 38.93it/s]
+[*] best model saved
+
+259it [00:20, 14.12it/s][Step 259/ Epoch 20]  Loss: 0.6954  
+40it [00:01, 37.92it/s]
+acc: 76.720, 38.84it/s]
+[*] best model saved
+
+352it [00:28, 12.42it/s]
+7it [00:00, 15.01it/s][Step 7/ Epoch 21]  Loss: 0.5358  
+40it [00:01, 37.96it/s]
+acc: 76.240, 39.03it/s]
+[*] best model saved
+
+107it [00:08, 14.14it/s][Step 107/ Epoch 21]  Loss: 0.5648  
+40it [00:01, 37.54it/s]
+acc: 77.140, 38.92it/s]
+[*] best model saved
+
+207it [00:16, 14.12it/s][Step 207/ Epoch 21]  Loss: 0.7889  
+40it [00:01, 37.84it/s]
+acc: 76.440, 38.71it/s]
+[*] best model saved
+
+307it [00:25, 14.08it/s][Step 307/ Epoch 21]  Loss: 0.5743  
+40it [00:01, 38.07it/s]
+acc: 77.360, 38.63it/s]
+[*] best model saved
+
+352it [00:29, 11.91it/s]
+55it [00:03, 14.10it/s][Step 55/ Epoch 22]  Loss: 0.6867  
+40it [00:01, 37.87it/s]
+acc: 77.080, 38.34it/s]
+[*] best model saved
+
+155it [00:12, 14.17it/s][Step 155/ Epoch 22]  Loss: 0.7943  
+40it [00:01, 37.14it/s]
+acc: 77.120, 38.59it/s]
+[*] best model saved
+
+255it [00:20, 14.18it/s][Step 255/ Epoch 22]  Loss: 0.5512  
+40it [00:01, 37.69it/s]
+acc: 76.620, 38.52it/s]
+[*] best model saved
+
+352it [00:28, 12.39it/s]
+2it [00:00, 17.45it/s][Step 3/ Epoch 23]  Loss: 0.5905  
+40it [00:01, 37.86it/s]
+acc: 78.420, 39.00it/s]
+[*] best model saved
+
+103it [00:08, 14.17it/s][Step 103/ Epoch 23]  Loss: 0.7290  
+40it [00:01, 38.15it/s]
+acc: 77.300, 38.78it/s]
+[*] best model saved
+
+203it [00:16, 14.22it/s][Step 203/ Epoch 23]  Loss: 0.5751  
+40it [00:01, 38.08it/s]
+acc: 77.580, 39.09it/s]
+[*] best model saved
+
+303it [00:24, 14.19it/s][Step 303/ Epoch 23]  Loss: 0.5693  
+40it [00:01, 37.60it/s]
+acc: 78.380, 38.32it/s]
+[*] best model saved
+
+352it [00:29, 11.90it/s]
+50it [00:03, 14.15it/s][Step 51/ Epoch 24]  Loss: 0.7487  
+40it [00:01, 37.21it/s]
+acc: 76.860, 38.68it/s]
+[*] best model saved
+
+151it [00:11, 14.06it/s][Step 151/ Epoch 24]  Loss: 0.6407  
+40it [00:01, 37.72it/s]
+acc: 77.980, 38.75it/s]
+[*] best model saved
+
+251it [00:20, 14.17it/s][Step 251/ Epoch 24]  Loss: 0.4736  
+40it [00:01, 37.46it/s]
+acc: 77.620, 38.51it/s]
+[*] best model saved
+
+351it [00:28, 14.07it/s][Step 351/ Epoch 24]  Loss: 0.5079  
+40it [00:01, 37.51it/s]
+acc: 77.740, 38.45it/s]
+[*] best model saved
+
+352it [00:29, 11.85it/s]
+98it [00:06, 14.11it/s][Step 99/ Epoch 25]  Loss: 0.5570  
+40it [00:01, 37.05it/s]
+acc: 78.780, 38.10it/s]
+[*] best model saved
+
+199it [00:15, 14.08it/s][Step 199/ Epoch 25]  Loss: 0.5977  
+40it [00:01, 37.73it/s]
+acc: 78.140, 38.62it/s]
+[*] best model saved
+
+299it [00:23, 14.11it/s][Step 299/ Epoch 25]  Loss: 0.5082  
+40it [00:01, 37.79it/s]
+acc: 78.860, 38.55it/s]
+[*] best model saved
+
+352it [00:28, 12.35it/s]
+46it [00:03, 14.13it/s][Step 47/ Epoch 26]  Loss: 0.5171  
+40it [00:01, 37.71it/s]
+acc: 78.900, 38.76it/s]
+[*] best model saved
+
+147it [00:11, 14.06it/s][Step 147/ Epoch 26]  Loss: 0.6206  
+40it [00:01, 36.46it/s]
+acc: 78.420, 37.50it/s]
+[*] best model saved
+
+247it [00:19, 14.13it/s][Step 247/ Epoch 26]  Loss: 0.5876  
+40it [00:01, 37.20it/s]
+acc: 79.500, 38.51it/s]
+[*] best model saved
+
+347it [00:28, 14.09it/s][Step 347/ Epoch 26]  Loss: 0.6532  
+40it [00:01, 37.86it/s]
+acc: 78.940, 38.67it/s]
+[*] best model saved
+
+352it [00:29, 11.86it/s]
+94it [00:06, 14.12it/s][Step 95/ Epoch 27]  Loss: 0.7832  
+40it [00:01, 37.93it/s]
+acc: 77.660, 38.68it/s]
+[*] best model saved
+
+195it [00:15, 14.07it/s][Step 195/ Epoch 27]  Loss: 0.4718  
+40it [00:01, 37.46it/s]
+acc: 79.000, 38.43it/s]
+[*] best model saved
+
+295it [00:23, 14.02it/s][Step 295/ Epoch 27]  Loss: 0.6055  
+40it [00:01, 38.08it/s]
+acc: 79.000, 38.70it/s]
+[*] best model saved
+
+352it [00:28, 12.33it/s]
+43it [00:03, 14.11it/s][Step 43/ Epoch 28]  Loss: 0.5308  
+40it [00:01, 37.51it/s]
+acc: 79.140, 38.56it/s]
+[*] best model saved
+
+143it [00:11, 14.07it/s][Step 143/ Epoch 28]  Loss: 0.5317  
+40it [00:01, 37.67it/s]
+acc: 79.800, 38.43it/s]
+[*] best model saved
+
+243it [00:19, 14.06it/s][Step 243/ Epoch 28]  Loss: 0.6306  
+40it [00:01, 37.81it/s]
+acc: 79.800, 38.64it/s]
+[*] best model saved
+
+343it [00:27, 14.12it/s][Step 343/ Epoch 28]  Loss: 0.5258  
+40it [00:01, 37.53it/s]
+acc: 79.360, 38.50it/s]
+[*] best model saved
+
+352it [00:29, 11.86it/s]
+90it [00:06, 14.13it/s][Step 91/ Epoch 29]  Loss: 0.5450  
+40it [00:01, 36.94it/s]
+acc: 79.040, 38.67it/s]
+[*] best model saved
+
+191it [00:14, 14.10it/s][Step 191/ Epoch 29]  Loss: 0.4762  
+40it [00:01, 37.13it/s]
+acc: 78.140, 38.76it/s]
+[*] best model saved
+
+291it [00:23, 14.09it/s][Step 291/ Epoch 29]  Loss: 0.5990  
+40it [00:01, 37.88it/s]
+acc: 79.040, 38.68it/s]
+[*] best model saved
+
+352it [00:28, 12.34it/s]
+39it [00:02, 14.02it/s][Step 39/ Epoch 30]  Loss: 0.5254  
+40it [00:01, 36.67it/s]
+acc: 79.881, 38.59it/s]
+[*] best model saved
+
+139it [00:11, 14.14it/s][Step 139/ Epoch 30]  Loss: 0.5897  
+40it [00:01, 37.45it/s]
+acc: 80.200, 38.64it/s]
+[*] best model saved
+
+239it [00:19, 14.03it/s][Step 239/ Epoch 30]  Loss: 0.5624  
+40it [00:01, 37.65it/s]
+acc: 80.040, 38.63it/s]
+[*] best model saved
+
+339it [00:27, 14.18it/s][Step 339/ Epoch 30]  Loss: 0.5256  
+40it [00:01, 37.72it/s]
+acc: 79.981, 38.83it/s]
+[*] best model saved
+
+352it [00:29, 11.85it/s]
+86it [00:06, 14.12it/s][Step 87/ Epoch 31]  Loss: 0.6083  
+40it [00:01, 37.70it/s]
+acc: 80.020, 38.60it/s]
+[*] best model saved
+
+187it [00:14, 14.10it/s][Step 187/ Epoch 31]  Loss: 0.4500  
+40it [00:01, 37.96it/s]
+acc: 80.780, 38.64it/s]
+[*] best model saved
+
+287it [00:22, 14.13it/s][Step 287/ Epoch 31]  Loss: 0.5054  
+40it [00:01, 37.92it/s]
+acc: 79.940, 38.78it/s]
+[*] best model saved
+
+352it [00:28, 12.39it/s]
+35it [00:02, 14.18it/s][Step 35/ Epoch 32]  Loss: 0.5260  
+40it [00:01, 37.43it/s]
+acc: 80.060, 38.77it/s]
+[*] best model saved
+
+135it [00:10, 14.05it/s][Step 135/ Epoch 32]  Loss: 0.6058  
+40it [00:01, 37.32it/s]
+acc: 79.380, 38.62it/s]
+[*] best model saved
+
+235it [00:18, 14.15it/s][Step 235/ Epoch 32]  Loss: 0.3585  
+40it [00:01, 37.90it/s]
+acc: 80.440, 38.77it/s]
+[*] best model saved
+
+335it [00:27, 14.07it/s][Step 335/ Epoch 32]  Loss: 0.5164  
+40it [00:01, 37.90it/s]
+acc: 79.500, 38.80it/s]
+[*] best model saved
+
+352it [00:29, 11.88it/s]
+82it [00:05, 14.01it/s][Step 83/ Epoch 33]  Loss: 0.4838  
+40it [00:01, 37.69it/s]
+acc: 80.240, 38.62it/s]
+[*] best model saved
+
+183it [00:14, 14.04it/s][Step 183/ Epoch 33]  Loss: 0.4162  
+40it [00:01, 37.40it/s]
+acc: 80.001, 38.57it/s]
+[*] best model saved
+
+283it [00:22, 14.04it/s][Step 283/ Epoch 33]  Loss: 0.5787  
+40it [00:01, 37.48it/s]
+acc: 80.541, 38.79it/s]
+[*] best model saved
+
+352it [00:28, 12.30it/s]
+30it [00:02, 14.02it/s][Step 31/ Epoch 34]  Loss: 0.5253  
+40it [00:01, 37.31it/s]
+acc: 81.300, 38.33it/s]
+[*] best model saved
+
+131it [00:10, 14.05it/s][Step 131/ Epoch 34]  Loss: 0.4612  
+40it [00:01, 37.79it/s]
+acc: 80.300, 38.78it/s]
+[*] best model saved
+
+231it [00:18, 13.96it/s][Step 231/ Epoch 34]  Loss: 0.4591  
+40it [00:01, 37.73it/s]
+acc: 80.780, 38.68it/s]
+[*] best model saved
+
+331it [00:27, 14.07it/s][Step 331/ Epoch 34]  Loss: 0.4994  
+40it [00:01, 37.77it/s]
+acc: 81.000, 38.77it/s]
+[*] best model saved
+
+352it [00:29, 11.84it/s]
+78it [00:05, 14.01it/s][Step 79/ Epoch 35]  Loss: 0.5096  
+40it [00:01, 37.82it/s]
+acc: 80.860, 38.57it/s]
+[*] best model saved
+
+179it [00:13, 14.05it/s][Step 179/ Epoch 35]  Loss: 0.3386  
+40it [00:01, 37.86it/s]
+acc: 81.200, 38.59it/s]
+[*] best model saved
+
+279it [00:22, 14.10it/s][Step 279/ Epoch 35]  Loss: 0.5043  
+40it [00:01, 37.38it/s]
+acc: 81.080, 38.68it/s]
+[*] best model saved
+
+352it [00:28, 12.30it/s]
+26it [00:01, 14.02it/s][Step 27/ Epoch 36]  Loss: 0.3365  
+40it [00:01, 37.64it/s]
+acc: 80.900, 38.39it/s]
+[*] best model saved
+
+127it [00:10, 14.08it/s][Step 127/ Epoch 36]  Loss: 0.4390  
+40it [00:01, 37.95it/s]
+acc: 80.760, 38.56it/s]
+[*] best model saved
+
+227it [00:18, 14.06it/s][Step 227/ Epoch 36]  Loss: 0.3660  
+40it [00:01, 37.59it/s]
+acc: 81.361, 38.48it/s]
+[*] best model saved
+
+327it [00:26, 14.07it/s][Step 327/ Epoch 36]  Loss: 0.3920  
+40it [00:01, 36.88it/s]
+acc: 81.621, 38.80it/s]
+[*] best model saved
+
+352it [00:31, 11.31it/s]
+75it [00:05, 14.06it/s][Step 75/ Epoch 37]  Loss: 0.4832  
+40it [00:01, 37.13it/s]
+acc: 81.101, 38.35it/s]
+[*] best model saved
+
+175it [00:13, 14.08it/s][Step 175/ Epoch 37]  Loss: 0.3025  
+40it [00:01, 37.56it/s]
+acc: 81.080, 38.76it/s]
+[*] best model saved
+
+275it [00:21, 14.12it/s][Step 275/ Epoch 37]  Loss: 0.4329  
+40it [00:01, 37.05it/s]
+acc: 79.861, 38.53it/s]
+[*] best model saved
+
+352it [00:28, 12.35it/s]
+22it [00:01, 14.09it/s][Step 23/ Epoch 38]  Loss: 0.4252  
+40it [00:01, 37.40it/s]
+acc: 79.961, 38.96it/s]
+[*] best model saved
+
+123it [00:09, 14.07it/s][Step 123/ Epoch 38]  Loss: 0.5576  
+40it [00:01, 37.05it/s]
+acc: 80.880, 37.51it/s]
+[*] best model saved
+
+223it [00:18, 14.04it/s][Step 223/ Epoch 38]  Loss: 0.4076  
+40it [00:01, 37.37it/s]
+acc: 80.740, 38.40it/s]
+[*] best model saved
+
+323it [00:26, 13.97it/s][Step 323/ Epoch 38]  Loss: 0.4836  
+40it [00:01, 37.05it/s]
+acc: 81.720, 38.60it/s]
+[*] best model saved
+
+352it [00:29, 11.84it/s]
+70it [00:04, 14.03it/s][Step 71/ Epoch 39]  Loss: 0.4067  
+40it [00:01, 37.59it/s]
+acc: 81.100, 38.42it/s]
+[*] best model saved
+
+171it [00:13, 14.09it/s][Step 171/ Epoch 39]  Loss: 0.4724  
+40it [00:01, 37.81it/s]
+acc: 81.960, 38.48it/s]
+[*] best model saved
+
+271it [00:21, 14.08it/s][Step 271/ Epoch 39]  Loss: 0.3345  
+40it [00:01, 37.39it/s]
+acc: 82.180, 38.52it/s]
+[*] best model saved
+
+352it [00:28, 12.31it/s]
+18it [00:01, 14.09it/s][Step 19/ Epoch 40]  Loss: 0.3831  
+40it [00:01, 37.86it/s]
+acc: 81.800, 38.34it/s]
+[*] best model saved
+
+119it [00:09, 14.02it/s][Step 119/ Epoch 40]  Loss: 0.3332  
+40it [00:01, 35.96it/s]
+acc: 80.260, 37.98it/s]
+[*] best model saved
+
+219it [00:17, 14.01it/s][Step 219/ Epoch 40]  Loss: 0.4034  
+40it [00:01, 38.11it/s]
+acc: 81.580, 38.78it/s]
+[*] best model saved
+
+319it [00:26, 14.01it/s][Step 319/ Epoch 40]  Loss: 0.4530  
+40it [00:01, 35.57it/s]
+acc: 81.561, 38.14it/s]
+[*] best model saved
+
+352it [00:29, 11.77it/s]
+66it [00:04, 14.02it/s][Step 67/ Epoch 41]  Loss: 0.4113  
+40it [00:01, 37.73it/s]
+acc: 81.900, 38.45it/s]
+[*] best model saved
+
+167it [00:13, 13.77it/s][Step 167/ Epoch 41]  Loss: 0.4432  
+40it [00:01, 37.31it/s]
+acc: 81.680, 38.58it/s]
+[*] best model saved
+
+267it [00:21, 13.94it/s][Step 267/ Epoch 41]  Loss: 0.3867  
+40it [00:01, 37.51it/s]
+acc: 81.400, 38.24it/s]
+[*] best model saved
+
+352it [00:28, 12.22it/s]
+15it [00:01, 14.13it/s][Step 15/ Epoch 42]  Loss: 0.3287  
+40it [00:01, 37.61it/s]
+acc: 81.920, 38.41it/s]
+[*] best model saved
+
+115it [00:09, 14.02it/s][Step 115/ Epoch 42]  Loss: 0.4133  
+40it [00:01, 37.06it/s]
+acc: 82.300, 38.34it/s]
+[*] best model saved
+
+215it [00:17, 14.01it/s][Step 215/ Epoch 42]  Loss: 0.2526  
+40it [00:01, 37.51it/s]
+acc: 81.000, 38.47it/s]
+[*] best model saved
+
+315it [00:26, 14.05it/s][Step 315/ Epoch 42]  Loss: 0.3651  
+40it [00:01, 37.57it/s]
+acc: 82.181, 38.79it/s]
+[*] best model saved
+
+352it [00:29, 11.80it/s]
+63it [00:04, 14.01it/s][Step 63/ Epoch 43]  Loss: 0.5621  
+40it [00:01, 37.25it/s]
+acc: 82.180, 38.18it/s]
+[*] best model saved
+
+163it [00:12, 13.98it/s][Step 163/ Epoch 43]  Loss: 0.3787  
+40it [00:01, 37.10it/s]
+acc: 82.081, 38.44it/s]
+[*] best model saved
+
+263it [00:21, 13.98it/s][Step 263/ Epoch 43]  Loss: 0.4238  
+40it [00:01, 37.74it/s]
+acc: 82.240, 38.60it/s]
+[*] best model saved
+
+352it [00:28, 12.20it/s]
+10it [00:00, 14.12it/s][Step 11/ Epoch 44]  Loss: 0.4400  
+40it [00:01, 37.06it/s]
+acc: 82.200, 37.82it/s]
+[*] best model saved
+
+111it [00:09, 13.81it/s][Step 111/ Epoch 44]  Loss: 0.4178  
+40it [00:01, 36.94it/s]
+acc: 83.001, 38.29it/s]
+[*] best model saved
+
+211it [00:17, 13.67it/s][Step 211/ Epoch 44]  Loss: 0.3761  
+40it [00:01, 37.24it/s]
+acc: 82.100, 38.16it/s]
+[*] best model saved
+
+311it [00:25, 14.04it/s][Step 311/ Epoch 44]  Loss: 0.3913  
+40it [00:01, 37.42it/s]
+acc: 82.641, 38.60it/s]
+[*] best model saved
+
+352it [00:30, 11.73it/s]
+58it [00:04, 13.98it/s][Step 59/ Epoch 45]  Loss: 0.2855  
+40it [00:01, 37.85it/s]
+acc: 82.720, 38.43it/s]
+[*] best model saved
+
+159it [00:12, 13.99it/s][Step 159/ Epoch 45]  Loss: 0.3997  
+40it [00:01, 37.34it/s]
+acc: 81.680, 38.36it/s]
+[*] best model saved
+
+259it [00:20, 14.05it/s][Step 259/ Epoch 45]  Loss: 0.2301  
+40it [00:01, 36.50it/s]
+acc: 82.741, 38.68it/s]
+[*] best model saved
+
+352it [00:28, 12.25it/s]
+6it [00:00, 14.17it/s][Step 7/ Epoch 46]  Loss: 0.4618  
+40it [00:01, 37.67it/s]
+acc: 82.520, 38.47it/s]
+[*] best model saved
+
+107it [00:08, 14.00it/s][Step 107/ Epoch 46]  Loss: 0.2618  
+40it [00:01, 37.66it/s]
+acc: 82.420, 38.46it/s]
+[*] best model saved
+
+207it [00:17, 14.03it/s][Step 207/ Epoch 46]  Loss: 0.3797  
+40it [00:01, 37.81it/s]
+acc: 82.180, 38.45it/s]
+[*] best model saved
+
+307it [00:25, 13.99it/s][Step 307/ Epoch 46]  Loss: 0.3755  
+40it [00:01, 37.06it/s]
+acc: 82.540, 38.43it/s]
+[*] best model saved
+
+352it [00:29, 11.79it/s]
+55it [00:03, 14.02it/s][Step 55/ Epoch 47]  Loss: 0.3940  
+40it [00:01, 37.51it/s]
+acc: 82.400, 38.47it/s]
+[*] best model saved
+
+155it [00:12, 14.03it/s][Step 155/ Epoch 47]  Loss: 0.3541  
+40it [00:01, 37.25it/s]
+acc: 82.760, 38.50it/s]
+[*] best model saved
+
+255it [00:20, 14.04it/s][Step 255/ Epoch 47]  Loss: 0.2704  
+40it [00:01, 37.54it/s]
+acc: 81.620, 38.35it/s]
+[*] best model saved
+
+352it [00:28, 12.30it/s]
+3it [00:00, 18.83it/s][Step 3/ Epoch 48]  Loss: 0.4087  
+40it [00:01, 37.25it/s]
+acc: 82.180, 38.39it/s]
+[*] best model saved
+
+103it [00:08, 14.02it/s][Step 103/ Epoch 48]  Loss: 0.3397  
+40it [00:01, 37.32it/s]
+acc: 82.801, 38.33it/s]
+[*] best model saved
+
+203it [00:16, 14.02it/s][Step 203/ Epoch 48]  Loss: 0.3969  
+40it [00:01, 37.30it/s]
+acc: 82.300, 38.32it/s]
+[*] best model saved
+
+303it [00:25, 13.97it/s][Step 303/ Epoch 48]  Loss: 0.2325  
+40it [00:01, 37.66it/s]
+acc: 82.880, 38.30it/s]
+[*] best model saved
+
+352it [00:29, 11.80it/s]
+50it [00:03, 14.02it/s][Step 51/ Epoch 49]  Loss: 0.1566  
+40it [00:01, 37.02it/s]
+acc: 82.580, 38.48it/s]
+[*] best model saved
+
+151it [00:11, 14.01it/s][Step 151/ Epoch 49]  Loss: 0.3183  
+40it [00:01, 37.30it/s]
+acc: 81.981, 38.47it/s]
+[*] best model saved
+
+251it [00:20, 14.04it/s][Step 251/ Epoch 49]  Loss: 0.3294  
+40it [00:01, 36.50it/s]
+acc: 83.280, 38.45it/s]
+[*] best model saved
+
+351it [00:28, 14.03it/s][Step 351/ Epoch 49]  Loss: 0.3407  
+40it [00:01, 37.62it/s]
+acc: 82.500, 38.42it/s]
+[*] best model saved
+
+352it [00:29, 11.76it/s]

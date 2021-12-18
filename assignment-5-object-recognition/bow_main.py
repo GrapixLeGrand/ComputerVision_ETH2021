@@ -260,8 +260,8 @@ if __name__ == '__main__':
     nameDirNeg_test = 'data/data_bow/cars-testing-neg'
 
 
-    k = 16 #None  # todo
-    numiter = 20 #None  # todo
+    k = 17 #None  # todo
+    numiter = 10000 #None  # todo
 
     print('creating codebook ...')
     vCenters = create_codebook(nameDirPos_train, nameDirNeg_train, k, numiter)

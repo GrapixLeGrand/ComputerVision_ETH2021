@@ -79,13 +79,16 @@ class Vgg(nn.Module):
         :param x: input image batch tensor, [bs, 3, 32, 32]
         :return: score: predicted score for each class (10 classes in total), [bs, 10]
         """
+
+        bs, _, _, _ = x.size()
+
         # TODO
         score = self.conv_block1(x)
         score = self.conv_block2(score)
         score = self.conv_block3(score)
         score = self.conv_block4(score)
         score = self.conv_block5(score)
-        score = score.view((128, 512))
+        score = score.view((bs, 512))
         score = self.linear_classifier(score)
 
         return score
