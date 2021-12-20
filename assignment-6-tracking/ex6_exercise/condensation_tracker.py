@@ -12,8 +12,8 @@ from resample import resample
 from estimate import estimate
 
 
-top_left = []
-bottom_right = []
+top_left = [20, 30]
+bottom_right = [90, 100]
 
 def line_select_callback(clk, rls):
     print(clk.xdata, clk.ydata)
@@ -62,7 +62,7 @@ def condensation_tracker(video_path, params):
         first_frame = 1
         last_frame = 60
 
-    data_dir = './data/'
+    data_dir = './data/' #'/home/quentin/Desktop/ETH/Courses/cv/assignment-6-tracking/ex6_exercise/data' #'./data/'
     video_path = os.path.join(data_dir, video_name)
 
     vidcap = cv2.VideoCapture(video_path)
@@ -118,6 +118,8 @@ def condensation_tracker(video_path, params):
     fig, ax = plt.subplots(1)
     im = ax.imshow(first_image)
     plt.ion()
+
+    particles = np.asanyarray(particles)
 
     for i in range(last_frame - first_frame + 1):
         t = i + first_frame
