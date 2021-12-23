@@ -3,28 +3,23 @@ import numpy as np
 #TODO
 def propagate(particles, frame_height, frame_width, params):
 
-    A = np.zeros((2, 2))
-
     if (params["model"] == 0):
-        A = np.random.normal(loc=0.0, scale=1.0, size=(2, 2)) # Noise only
+        noise = np.random.standard_normal(particles.shape)
+        std_dev = params['sigma_position']
+        particles += noise * std_dev
     elif (params["model"] == 1):
-        A = np.random.normal(loc=0.0, scale=1.0, size=(2, 2)) # Constant velocity
+        noise = np.random.standard_normal(particles.shape)
+        std_dev = params['sigma_velocity']
+        A = np.array([
+            [1, 0, 1, 0],
+            [0, 1, 0, 1],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ])
+        particles = particles @ A.T + noise * std_dev
 
-    #to avoid dingeries for now
-    A = np.abs(A)
-
-    #multiply after the check ?
-    particles = particles @ A.T
-
-    particles_x = particles[:, 0]
-    particles_filter_mask_x = np.logical_and(particles_x >= 0, particles_x < frame_width)
-
-    particles_y = particles[:, 1]
-    particles_filter_mask_y = np.logical_and(particles_y >= 0, particles_y < frame_height)
-
-    mask = np.logical_and(particles_filter_mask_x, particles_filter_mask_y)
-
-    mask_indices = np.where(mask)
-    #particles = particles[mask_indices]
+    # if the particles move out of the box dont remove them, simply clamp them
+    particles[:, 0] = np.clip(particles[:, 0], 0, frame_width - 1)
+    particles[:, 1] = np.clip(particles[:, 1], 0, frame_height - 1)
 
     return particles
