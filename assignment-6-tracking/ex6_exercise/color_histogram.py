@@ -12,18 +12,18 @@ def color_histogram(xmin, ymin, xmax, ymax, frame, hist_bin):
     s1 = np.sum(hist_r)
     s2 = np.sum(hist_g)
     s3 = np.sum(hist_b)
-
+    """
     if (np.sum(hist_r) > 0):
         hist_r /= np.sum(hist_r)
     if (np.sum(hist_g) > 0):
         hist_g /= np.sum(hist_g)
     if (np.sum(hist_b) > 0):
         hist_b /= np.sum(hist_b)
+    """
+    hist = np.zeros((3, hist_bin))
 
-    hist = np.append(hist_r[:, None], hist_g[:, None], axis=1)
-    hist = np.append(hist, hist_b[:, None], axis=1)
-
-    #if (np.sum(hist) > 0):
-    #    hist /= np.sum(hist)
+    hist[0] = hist_r
+    hist[1] = hist_g
+    hist[2] = hist_b
 
     return hist

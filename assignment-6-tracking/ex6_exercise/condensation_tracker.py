@@ -35,7 +35,10 @@ def onkeypress(event):
 def toggle_selector(event):
     toggle_selector.RS.set_active(True)
 
-
+"""
+a priori is blue
+a posteriori is red
+"""
 def condensation_tracker(video_path, params):
     '''
     video_name - video name
@@ -224,10 +227,10 @@ if __name__ == "__main__":
         "hist_bin": 16,
         "alpha": 0,
         "sigma_observe": 0.1,
-        "model": 0,
+        "model": 1,
         "num_particles": 300,
         "sigma_position": 15,
-        "sigma_velocity": 1,
+        "sigma_velocity": 15,
         "initial_velocity": (1, 10)
     }
     condensation_tracker(video_name, params)

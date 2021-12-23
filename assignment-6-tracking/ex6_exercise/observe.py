@@ -17,49 +17,45 @@ def observe(particles, frame, bbox_height, bbox_width, params_hist_bin, target_h
 
     n_particles, _ = particles.shape
     particles_w = np.zeros(n_particles)
-    #box_half_dim = np.array([bbox_width // 2, bbox_height // 2])
     frame_width, frame_height, _ = frame.shape
 
     for i in range(0, n_particles):
 
+        particles[i][0] = np.clip(particles[i][0], bbox_width * 0.5, frame_width - 1.0 - bbox_width * 0.5)
+        particles[i][1] = np.clip(particles[i][1], bbox_height * 0.5, frame_height - 1.0 - bbox_height * 0.5)
+
         pi = particles[i]
-
-        #xmin = min(max(0, round(pi[0]-0.5*bbox_width)), frame_width-1)
-        #xmax = min(max(0, round(pi[0]+0.5*bbox_width)), frame_width-1)
-
-        #ymin = min(max(0, round(pi[1]-0.5*bbox_height)), frame_height-1)
-        #ymax = min(max(0, round(pi[1]+0.5*bbox_height)), frame_height-1)
-
-        #xmin = int(np.clip(pi[0] - 0.5 * bbox_width, 0.5 * bbox_width, frame_width - 0.5 * bbox_width - 1))
-        #xmax = int(np.clip(pi[0] + 0.5 * bbox_width, 0.5 * bbox_width, frame_width - 0.5 * bbox_width - 1))
 
         xmin = int(np.clip(pi[0] - 0.5 * bbox_width, 0.0, frame_width - 1.0))
         xmax = int(np.clip(pi[0] + 0.5 * bbox_width, 0.0, frame_width - 1.0))
 
-        if (xmax - xmin < bbox_width and xmin == 0):
+        if (xmin == 0):
             xmax = xmin + bbox_width
 
-        if (xmax - xmin < bbox_width and xmax == frame_width - 1):
+        if (xmax == frame_width - 1):
             xmin = xmax - bbox_width
 
         ymin = int(np.clip(pi[1] - 0.5 * bbox_height, 0.0, frame_height - 1.0))
         ymax = int(np.clip(pi[1] + 0.5 * bbox_height, 0.0, frame_height - 1.0))
 
-        if (ymax - ymin < bbox_height and ymin == 0):
+        if (ymin == 0): #ymax - ymin < bbox_height and 
             ymax = ymin + bbox_height
+            #particles[i][1] = ymin + bbox_height * 0.5
 
-        if (ymax - ymin < bbox_height and ymax == frame_height - 1):
+        if (ymax == frame_height - 1): #ymax - ymin < bbox_height and 
             ymin = ymax - bbox_height
-
-        #ymin = int(np.clip(pi[1] - 0.5 * bbox_height, 0.5 * bbox_height, frame_height - 0.5 * bbox_height - 1))
-        #ymax = int(np.clip(pi[1] + 0.5 * bbox_height, 0.5 * bbox_height, frame_height - 0.5 * bbox_height - 1))
+            #particles[i][1] = ymax - bbox_height * 0.5
 
         assert xmax - xmin == bbox_width, "width of bounding box is wrong"
         assert ymax - ymin == bbox_height, "height of bounding box is wrong"
+        
         assert xmin < xmax, "bounding box width is 0"
         assert ymin < ymax, "bounding box height is 0"
         assert xmin >= 0 and xmax <= frame_width - 1, "xmin or max outside the frame"
         assert ymin >= 0 and ymax <= frame_height - 1, "ymin or max outside the frame"
+
+        assert particles[i][0] >= bbox_width * 0.5 and particles[i][0] <= (frame_width - 1) - bbox_width * 0.5, "particle bbox width outside the frame"
+        assert particles[i][1] >= bbox_height * 0.5 and particles[i][1] <= (frame_height - 1) - bbox_height * 0.5, "particle bbox outside the frame"
 
         histogram = color_histogram(
             xmin, ymin, xmax, ymax, frame, params_hist_bin)
